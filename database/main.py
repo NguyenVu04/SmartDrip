@@ -4,7 +4,7 @@ from TemperatureRecord import TemperatureRecord
 from HumidityRecord import HumidityRecord
 from MoistureRecord import MoistureRecord
 
-uri = "mongodb://localhost:27017"
+uri = "mongodb://localhost:27017" #! CHANGE THIS TO YOUR MONGODB URI
 
 def main():
     client = MongoClient(uri)
