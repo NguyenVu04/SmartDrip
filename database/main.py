@@ -3,6 +3,7 @@ from User import User
 from TemperatureRecord import TemperatureRecord
 from HumidityRecord import HumidityRecord
 from MoistureRecord import MoistureRecord
+from PumpRecord import PumpRecord
 
 uri = "mongodb://localhost:27017" #! CHANGE THIS TO YOUR MONGODB URI
 
@@ -38,6 +39,15 @@ def main():
         HumidityRecord(result.inserted_id, 8),
     ]
     humidity_record_collection.insert_many([record.__dict__ for record in humidity_records])
+
+    pump_record_collection = db.pump_records
+    pump_records = [
+        PumpRecord(result.inserted_id, True),
+        PumpRecord(result.inserted_id, False),
+        PumpRecord(result.inserted_id, True),
+        PumpRecord(result.inserted_id, False),
+    ]
+    pump_record_collection.insert_many([record.__dict__ for record in pump_records])
 
 if __name__ == "__main__":
     main()
