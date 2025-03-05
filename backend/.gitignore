@@ -52,3 +52,10 @@ build/config\.gypi
 .npmrc
 pnpm-lock.yaml
 /.history
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
