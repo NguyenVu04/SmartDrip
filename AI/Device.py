@@ -14,5 +14,5 @@ class Device(ABC):
         self.feedId = feedId
     
     @abstractmethod    
-    def createRecord(self):
+    def createRecord(self, userId: str) -> Record:
         pass

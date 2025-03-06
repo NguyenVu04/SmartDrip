@@ -6,7 +6,7 @@ class Pump(Device):
     isOn: bool
     power: float
 
-    def __init__(self, feedId, isOn: bool, power: float):
+    def __init__(self, feedId: str, isOn: bool = False, power: float = 0):
         super().__init__(feedId)
         self.isOn = isOn
         self.power = power
@@ -20,5 +20,5 @@ class Pump(Device):
     def getPower(self):
         return self.power
     
-    def createRecord(self) -> Record:
-        return PumpRecord(self.isOn)
+    def createRecord(self, userId: str) -> Record:
+        return PumpRecord(userId, self.isOn)
