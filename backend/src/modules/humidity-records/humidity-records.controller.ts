@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { HumidityRecordsService } from './humidity-records.service';
 import { CreateHumidityRecordDto } from './dto/create-humidity-record.dto';
 import { UpdateHumidityRecordDto } from './dto/update-humidity-record.dto';
@@ -8,27 +8,31 @@ export class HumidityRecordsController {
   constructor(private readonly humidityRecordsService: HumidityRecordsService) {}
 
   @Post()
-  create(@Body() createHumidityRecordDto: CreateHumidityRecordDto) {
+  async create(@Body() createHumidityRecordDto: CreateHumidityRecordDto) {
     return this.humidityRecordsService.create(createHumidityRecordDto);
   }
 
   @Get()
-  findAll() {
-    return this.humidityRecordsService.findAll();
+  async findAll(
+      @Query() query: string,
+      @Query("current") current: string,
+      @Query("pageSize") pageSize: string,
+    ) {
+    return this.humidityRecordsService.findAll(query, +current, +pageSize);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.humidityRecordsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return this.humidityRecordsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHumidityRecordDto: UpdateHumidityRecordDto) {
-    return this.humidityRecordsService.update(+id, updateHumidityRecordDto);
+  async update(@Body() updateHumidityRecordDto: UpdateHumidityRecordDto) {
+    return this.humidityRecordsService.update(updateHumidityRecordDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.humidityRecordsService.remove(+id);
+  async remove(@Param('id') _id: string) {
+    return this.humidityRecordsService.remove(_id);
   }
 }

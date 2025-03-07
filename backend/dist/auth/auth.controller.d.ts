@@ -17,4 +17,5 @@ export declare class AuthController {
         _id: any;
     }>;
     testMail(): string;
+    getProfile(req: any): any;
 }

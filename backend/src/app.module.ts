@@ -10,9 +10,11 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/passport/jwt-auth.guard';
 import { TransformInterceptor } from './core/transorm.interceptor';
 import { GardenInfoModule } from './modules/garden-info/garden-info.module';
+import { HumidityRecordsModule } from './modules/humidity-records/humidity-records.module';
 @Module({
   imports: [
     UsersModule,
+    HumidityRecordsModule,
     ConfigModule.forRoot({isGlobal: true,}),
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({

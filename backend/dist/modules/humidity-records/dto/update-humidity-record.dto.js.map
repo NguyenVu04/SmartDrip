@@ -1,1 +1,1 @@
-{"version":3,"file":"update-humidity-record.dto.js","sourceRoot":"","sources":["../../../../src/modules/humidity-records/dto/update-humidity-record.dto.ts"],"names":[],"mappings":";;;AAAA,uDAAmD;AACnD,6EAAuE;AAEvE,MAAa,uBAAwB,SAAQ,IAAA,0BAAW,EAAC,oDAAuB,CAAC;CAAG;AAApF,0DAAoF"}
+{"version":3,"file":"update-humidity-record.dto.js","sourceRoot":"","sources":["../../../../src/modules/humidity-records/dto/update-humidity-record.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAEA,qDAA6C;AAE7C,MAAa,uBAAuB;CAQnC;AARD,0DAQC;AANG;IADC,IAAA,4BAAU,GAAE;;oDACD"}

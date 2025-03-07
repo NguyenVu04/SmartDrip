@@ -21,20 +21,20 @@ let HumidityRecordsController = class HumidityRecordsController {
     constructor(humidityRecordsService) {
         this.humidityRecordsService = humidityRecordsService;
     }
-    create(createHumidityRecordDto) {
+    async create(createHumidityRecordDto) {
         return this.humidityRecordsService.create(createHumidityRecordDto);
     }
-    findAll() {
-        return this.humidityRecordsService.findAll();
+    async findAll(query, current, pageSize) {
+        return this.humidityRecordsService.findAll(query, +current, +pageSize);
     }
-    findOne(id) {
-        return this.humidityRecordsService.findOne(+id);
+    async findOne(id) {
+        return this.humidityRecordsService.findOne(id);
     }
-    update(id, updateHumidityRecordDto) {
-        return this.humidityRecordsService.update(+id, updateHumidityRecordDto);
+    async update(updateHumidityRecordDto) {
+        return this.humidityRecordsService.update(updateHumidityRecordDto);
     }
-    remove(id) {
-        return this.humidityRecordsService.remove(+id);
+    async remove(_id) {
+        return this.humidityRecordsService.remove(_id);
     }
 };
 exports.HumidityRecordsController = HumidityRecordsController;
@@ -43,35 +43,37 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_humidity_record_dto_1.CreateHumidityRecordDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], HumidityRecordsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Query)("current")),
+    __param(2, (0, common_1.Query)("pageSize")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
 ], HumidityRecordsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], HumidityRecordsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_humidity_record_dto_1.UpdateHumidityRecordDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [update_humidity_record_dto_1.UpdateHumidityRecordDto]),
+    __metadata("design:returntype", Promise)
 ], HumidityRecordsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], HumidityRecordsController.prototype, "remove", null);
 exports.HumidityRecordsController = HumidityRecordsController = __decorate([
     (0, common_1.Controller)('humidity-records'),

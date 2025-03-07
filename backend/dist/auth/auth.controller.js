@@ -19,6 +19,7 @@ const create_auth_dto_1 = require("./dto/create-auth.dto");
 const mailer_1 = require("@nestjs-modules/mailer");
 const customize_1 = require("../decorator/customize");
 const local_auth_guard_1 = require("./passport/local-auth.guard");
+const jwt_auth_guard_1 = require("./passport/jwt-auth.guard");
 let AuthController = class AuthController {
     constructor(authService, mailerService) {
         this.authService = authService;
@@ -45,6 +46,9 @@ let AuthController = class AuthController {
             console.log('mail sent');
         });
         return "ok";
+    }
+    getProfile(req) {
+        return req.user;
     }
 };
 exports.AuthController = AuthController;
@@ -73,6 +77,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "testMail", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('profile'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getProfile", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService,

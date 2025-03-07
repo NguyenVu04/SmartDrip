@@ -5,6 +5,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Public, ResponseMessage } from 'src/decorator/customize';
 import { LocalAuthGuard } from './passport/local-auth.guard';
+import { JwtAuthGuard } from './passport/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -46,5 +47,12 @@ export class AuthController {
     })
 
     return "ok";
-  }  
+  }
+
+  // get me
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
 }
