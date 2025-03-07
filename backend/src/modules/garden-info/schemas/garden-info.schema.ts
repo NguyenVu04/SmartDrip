@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { IsNotEmpty } from "class-validator";
 import { HydratedDocument } from "mongoose";
 
 export type GardenInfoDocument = HydratedDocument<GardenInfo>;
@@ -18,6 +19,7 @@ export class GardenInfo {
     latitude: number
 
     @Prop()
+    @IsNotEmpty()
     userId: string
 }
 

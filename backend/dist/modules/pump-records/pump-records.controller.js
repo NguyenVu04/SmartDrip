@@ -21,20 +21,20 @@ let PumpRecordsController = class PumpRecordsController {
     constructor(pumpRecordsService) {
         this.pumpRecordsService = pumpRecordsService;
     }
-    create(createPumpRecordDto) {
+    async create(createPumpRecordDto) {
         return this.pumpRecordsService.create(createPumpRecordDto);
     }
-    findAll() {
-        return this.pumpRecordsService.findAll();
+    async findAll(query, current, pageSize) {
+        return this.pumpRecordsService.findAll(query, +current, +pageSize);
     }
-    findOne(id) {
-        return this.pumpRecordsService.findOne(+id);
+    async findOne(id) {
+        return this.pumpRecordsService.findOne(id);
     }
-    update(id, updatePumpRecordDto) {
-        return this.pumpRecordsService.update(+id, updatePumpRecordDto);
+    async update(id, updatePumpRecordDto) {
+        return this.pumpRecordsService.update(id, updatePumpRecordDto);
     }
-    remove(id) {
-        return this.pumpRecordsService.remove(+id);
+    async remove(id) {
+        return this.pumpRecordsService.remove(id);
     }
 };
 exports.PumpRecordsController = PumpRecordsController;
@@ -43,20 +43,23 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_pump_record_dto_1.CreatePumpRecordDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PumpRecordsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Query)("current")),
+    __param(2, (0, common_1.Query)("pageSize")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
 ], PumpRecordsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PumpRecordsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
@@ -64,14 +67,14 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_pump_record_dto_1.UpdatePumpRecordDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PumpRecordsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PumpRecordsController.prototype, "remove", null);
 exports.PumpRecordsController = PumpRecordsController = __decorate([
     (0, common_1.Controller)('pump-records'),

@@ -18,10 +18,6 @@ export class HumidityRecordsService {
 
   }
 
-  async checkIfThisUserIdExists(userId: string) {
-
-
-  }
   async create(createHumidityRecordDto: CreateHumidityRecordDto) {
 
 
@@ -96,7 +92,7 @@ export class HumidityRecordsService {
 
 
   async remove(_id: string) {
-    return this.humidityRecordModel
+    return await this.humidityRecordModel
     .deleteOne({ _id })
 
   }

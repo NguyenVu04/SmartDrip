@@ -27,8 +27,6 @@ let HumidityRecordsService = class HumidityRecordsService {
         this.humidityRecordModel = humidityRecordModel;
         this.usersService = usersService;
     }
-    async checkIfThisUserIdExists(userId) {
-    }
     async create(createHumidityRecordDto) {
         const { humidity, userId, timestamp } = createHumidityRecordDto;
         const user = await this.usersService.findOneById(userId);
@@ -90,7 +88,7 @@ let HumidityRecordsService = class HumidityRecordsService {
         };
     }
     async remove(_id) {
-        return this.humidityRecordModel
+        return await this.humidityRecordModel
             .deleteOne({ _id });
     }
 };

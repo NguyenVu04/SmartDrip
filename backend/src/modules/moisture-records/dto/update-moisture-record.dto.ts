@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateMoistureRecordDto } from './create-moisture-record.dto';
+export class UpdateMoistureRecordDto {
+    userId: string
+    moisture: number
+    timestamp: Date
+}
 
-export class UpdateMoistureRecordDto extends PartialType(CreateMoistureRecordDto) {}
+

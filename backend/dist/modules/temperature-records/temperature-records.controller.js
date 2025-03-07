@@ -21,20 +21,20 @@ let TemperatureRecordsController = class TemperatureRecordsController {
     constructor(temperatureRecordsService) {
         this.temperatureRecordsService = temperatureRecordsService;
     }
-    create(createTemperatureRecordDto) {
+    async create(createTemperatureRecordDto) {
         return this.temperatureRecordsService.create(createTemperatureRecordDto);
     }
-    findAll() {
-        return this.temperatureRecordsService.findAll();
+    async findAll(query, current, pageSize) {
+        return this.temperatureRecordsService.findAll(query, +current, +pageSize);
     }
-    findOne(id) {
-        return this.temperatureRecordsService.findOne(+id);
+    async findOne(id) {
+        return this.temperatureRecordsService.findOne(id);
     }
-    update(id, updateTemperatureRecordDto) {
+    async update(id, updateTemperatureRecordDto) {
         return this.temperatureRecordsService.update(+id, updateTemperatureRecordDto);
     }
-    remove(id) {
-        return this.temperatureRecordsService.remove(+id);
+    async remove(id) {
+        return this.temperatureRecordsService.remove(id);
     }
 };
 exports.TemperatureRecordsController = TemperatureRecordsController;
@@ -43,20 +43,23 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_temperature_record_dto_1.CreateTemperatureRecordDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TemperatureRecordsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Query)("current")),
+    __param(2, (0, common_1.Query)("pageSize")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
 ], TemperatureRecordsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TemperatureRecordsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
@@ -64,14 +67,14 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_temperature_record_dto_1.UpdateTemperatureRecordDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TemperatureRecordsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TemperatureRecordsController.prototype, "remove", null);
 exports.TemperatureRecordsController = TemperatureRecordsController = __decorate([
     (0, common_1.Controller)('temperature-records'),

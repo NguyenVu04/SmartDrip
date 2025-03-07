@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TemperatureRecordsService } from './temperature-records.service';
 import { CreateTemperatureRecordDto } from './dto/create-temperature-record.dto';
 import { UpdateTemperatureRecordDto } from './dto/update-temperature-record.dto';
@@ -8,27 +8,29 @@ export class TemperatureRecordsController {
   constructor(private readonly temperatureRecordsService: TemperatureRecordsService) {}
 
   @Post()
-  create(@Body() createTemperatureRecordDto: CreateTemperatureRecordDto) {
+  async create(@Body() createTemperatureRecordDto: CreateTemperatureRecordDto) {
     return this.temperatureRecordsService.create(createTemperatureRecordDto);
   }
 
   @Get()
-  findAll() {
-    return this.temperatureRecordsService.findAll();
+  async findAll(@Query() query: string,
+        @Query("current") current: string,
+        @Query("pageSize") pageSize: string,) {
+    return this.temperatureRecordsService.findAll(query, +current, +pageSize);
   }
-
+  
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.temperatureRecordsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return this.temperatureRecordsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTemperatureRecordDto: UpdateTemperatureRecordDto) {
+  async update(@Param('id') id: string, @Body() updateTemperatureRecordDto: UpdateTemperatureRecordDto) {
     return this.temperatureRecordsService.update(+id, updateTemperatureRecordDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.temperatureRecordsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return this.temperatureRecordsService.remove(id);
   }
 }

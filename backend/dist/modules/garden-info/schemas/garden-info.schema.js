@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GardenInfoSchema = exports.GardenInfo = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
+const class_validator_1 = require("class-validator");
 let GardenInfo = class GardenInfo {
 };
 exports.GardenInfo = GardenInfo;
@@ -32,6 +33,7 @@ __decorate([
 ], GardenInfo.prototype, "latitude", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], GardenInfo.prototype, "userId", void 0);
 exports.GardenInfo = GardenInfo = __decorate([

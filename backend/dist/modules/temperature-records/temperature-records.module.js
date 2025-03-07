@@ -10,13 +10,26 @@ exports.TemperatureRecordsModule = void 0;
 const common_1 = require("@nestjs/common");
 const temperature_records_service_1 = require("./temperature-records.service");
 const temperature_records_controller_1 = require("./temperature-records.controller");
+const mongoose_1 = require("@nestjs/mongoose");
+const temperature_record_entity_1 = require("./schemas/temperature-record.entity");
+const users_module_1 = require("../users/users.module");
 let TemperatureRecordsModule = class TemperatureRecordsModule {
 };
 exports.TemperatureRecordsModule = TemperatureRecordsModule;
 exports.TemperatureRecordsModule = TemperatureRecordsModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            users_module_1.UsersModule,
+            mongoose_1.MongooseModule.forFeature([
+                {
+                    name: temperature_record_entity_1.TemperatureRecord.name,
+                    schema: temperature_record_entity_1.TemperatureRecordSchema,
+                },
+            ]),
+        ],
         controllers: [temperature_records_controller_1.TemperatureRecordsController],
         providers: [temperature_records_service_1.TemperatureRecordsService],
+        exports: [temperature_records_service_1.TemperatureRecordsService],
     })
 ], TemperatureRecordsModule);
 //# sourceMappingURL=temperature-records.module.js.map

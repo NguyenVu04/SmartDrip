@@ -7,7 +7,6 @@ export declare class HumidityRecordsService {
     private humidityRecordModel;
     private readonly usersService;
     constructor(humidityRecordModel: Model<HumidityRecord>, usersService: UsersService);
-    checkIfThisUserIdExists(userId: string): Promise<void>;
     create(createHumidityRecordDto: CreateHumidityRecordDto): Promise<{
         _id: any;
         userId: any;

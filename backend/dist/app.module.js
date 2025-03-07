@@ -20,14 +20,20 @@ const jwt_auth_guard_1 = require("./auth/passport/jwt-auth.guard");
 const transorm_interceptor_1 = require("./core/transorm.interceptor");
 const garden_info_module_1 = require("./modules/garden-info/garden-info.module");
 const humidity_records_module_1 = require("./modules/humidity-records/humidity-records.module");
+const moisture_records_module_1 = require("./modules/moisture-records/moisture-records.module");
+const pump_records_module_1 = require("./modules/pump-records/pump-records.module");
+const temperature_records_module_1 = require("./modules/temperature-records/temperature-records.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            moisture_records_module_1.MoistureRecordsModule,
             users_module_1.UsersModule,
             humidity_records_module_1.HumidityRecordsModule,
+            pump_records_module_1.PumpRecordsModule,
+            temperature_records_module_1.TemperatureRecordsModule,
             config_1.ConfigModule.forRoot({ isGlobal: true, }),
             mongoose_1.MongooseModule.forRootAsync({
                 useFactory: async (configService) => ({
