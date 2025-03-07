@@ -9,6 +9,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/passport/jwt-auth.guard';
 import { TransformInterceptor } from './core/transorm.interceptor';
+import { GardenInfoModule } from './modules/garden-info/garden-info.module';
 @Module({
   imports: [
     UsersModule,
@@ -45,7 +46,8 @@ import { TransformInterceptor } from './core/transorm.interceptor';
       }),
       inject: [ConfigService],
     }),
-    AuthModule
+    AuthModule,
+    GardenInfoModule
   ],
   controllers: [AppController],
   providers: [

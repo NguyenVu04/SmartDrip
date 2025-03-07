@@ -14,7 +14,7 @@ export declare class UsersController {
         current: number;
         pageSize: number;
     }>;
-    findOne(id: string): Promise<string>;
+    findOneById(id: string): Promise<null>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<string>;
     remove(id: string): Promise<import("mongodb").DeleteResult>;
 }

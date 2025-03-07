@@ -18,6 +18,7 @@ const handlebars_adapter_1 = require("@nestjs-modules/mailer/dist/adapters/handl
 const auth_module_1 = require("./auth/auth.module");
 const jwt_auth_guard_1 = require("./auth/passport/jwt-auth.guard");
 const transorm_interceptor_1 = require("./core/transorm.interceptor");
+const garden_info_module_1 = require("./modules/garden-info/garden-info.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -58,7 +59,8 @@ exports.AppModule = AppModule = __decorate([
                 }),
                 inject: [config_1.ConfigService],
             }),
-            auth_module_1.AuthModule
+            auth_module_1.AuthModule,
+            garden_info_module_1.GardenInfoModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [

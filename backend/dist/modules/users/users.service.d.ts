@@ -19,7 +19,7 @@ export declare class UsersService {
         pageSize: number;
     }>;
     findOneByEmail(email: string): Promise<null>;
-    findOne(id: number): string;
+    findOneById(_id: string): Promise<null>;
     update(id: number, updateUserDto: UpdateUserDto): string;
     remove(_id: string): Promise<mongoose.mongo.DeleteResult>;
     handleRegister(registerDto: CreateUserDto): Promise<{

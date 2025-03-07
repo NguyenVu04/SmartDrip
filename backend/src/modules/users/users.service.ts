@@ -77,10 +77,15 @@ export class UsersService {
   async findOneByEmail(email: string) {
     return await this.userModel.findOne({email})
   }
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
 
+  async findOneById(_id: string) {
+    if (mongoose.isValidObjectId(_id)) {
+      return await this.userModel.findById(_id).select('-password')
+    }
+    else{
+      throw new BadRequestException(`Invalid id ${_id}`)
+    }
+  }
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

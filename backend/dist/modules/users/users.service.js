@@ -119,8 +119,13 @@ let UsersService = class UsersService {
     async findOneByEmail(email) {
         return await this.userModel.findOne({ email });
     }
-    findOne(id) {
-        return `This action returns a #${id} user`;
+    async findOneById(_id) {
+        if (mongoose_2.default.isValidObjectId(_id)) {
+            return await this.userModel.findById(_id).select('-password');
+        }
+        else {
+            throw new common_1.BadRequestException(`Invalid id ${_id}`);
+        }
     }
     update(id, updateUserDto) {
         return `This action updates a #${id} user`;
