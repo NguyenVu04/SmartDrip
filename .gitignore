@@ -5,3 +5,5 @@
 .env.production.local
 .env.local
 backend/.env
+# remove backend/dist from gitignore
+backend/dist
