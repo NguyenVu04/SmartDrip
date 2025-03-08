@@ -13,7 +13,8 @@ class MoistureRecord(Record):
     def __dict__(self):
         return {
             "userId": self.userId,
-            "moisture": self.moisture
+            "moisture": self.moisture,
+            "timestamp": self.timestamp
         }
         
     def from_dict(self, data: dict):
