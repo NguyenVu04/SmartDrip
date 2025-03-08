@@ -4,6 +4,7 @@ from TemperatureSensor import TemperatureSensor
 from MoistureSensor import MoistureSensor
 from HumiditySensor import HumiditySensor
 from MongoConnection import MongoConnection
+from DeviceData import DeviceData
 
 class MQTTConnection:
     aioKey: str
@@ -98,5 +99,17 @@ class MQTTConnection:
         
     def disconnect(self):
         print('Disconnected from Adafruit IO!')
-        #!TODO: implement disconnect from Adafruit IO
+        
+    def getDeviceData(self):
+        return DeviceData(
+            temperature=self.temperatureSensor.getTemperature(),
+            moisture=self.moistureSensor.getMoisture(),
+            humidity=self.humiditySensor.getHumidity()
+        )
+        
+    def activatePump(self):
+        self.aioClient.publish('button1', 'ON')
+        
+    def deactivatePump(self):
+        self.aioClient.publish('button1', 'OFF')
         

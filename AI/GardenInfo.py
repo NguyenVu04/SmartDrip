@@ -24,13 +24,16 @@ class GardenInfo:
             "pumpPower": self.pumpPower
         }
     
-    def from_dict(self, data: dict):
-        self.treeType = data["treeType"]
-        self.numOfTree = data["numOfTree"]
-        self.longitude = data["longitude"]
-        self.latitude = data["latitude"]
-        self.userId = data["userId"]
-        self.pumpPower = data["pumpPower"]
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(
+            treeType = data["treeType"],
+            numOfTree = data["numOfTree"],
+            longitude = data["longitude"],
+            latitude = data["latitude"],
+            userId = data["userId"],
+            pumpPower = data["pumpPower"]
+        )
         
     def getTreeType(self) -> str:
         return self.treeType

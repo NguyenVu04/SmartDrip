@@ -26,3 +26,6 @@ class MQTTManager:
             moisture=self.connections[userId].moistureSensor.getMoisture(),
             humidity=self.connections[userId].humiditySensor.getHumidity()
         )
+        
+    def getConnections(self):
+        return self.connections

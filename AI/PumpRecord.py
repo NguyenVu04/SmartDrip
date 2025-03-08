@@ -13,7 +13,8 @@ class PumpRecord(Record):
     def __dict__(self):
         return {
             "userId": self.userId,
-            "isOn": self.isOn
+            "isOn": self.isOn,
+            "timestamp": self.timestamp
         }
         
     def from_dict(self, data: dict):
