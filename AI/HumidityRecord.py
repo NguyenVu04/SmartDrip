@@ -9,3 +9,13 @@ class HumidityRecord(Record):
         
     def getHumidity(self):
         return self.humidity
+    
+    def __dict__(self):
+        return {
+            "userId": self.userId,
+            "humidity": self.humidity
+        }
+        
+    def from_dict(self, data: dict):
+        self.userId = data["userId"]
+        self.humidity = data["humidity"]

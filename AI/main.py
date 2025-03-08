@@ -1,13 +1,19 @@
-from MQTTConnection import MQTTConnection
+from typing import Union
+from fastapi import FastAPI
 from MQTTManager import MQTTManager
-import time
 
+app = FastAPI()
 manager = MQTTManager()
 
-def main():
-    while True:
-        print("Welcome to the AI!")
-        time.sleep(10)
-    
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: Union[str, None] = None):
+    return {"item_id": item_id, "q": q}
+
 if __name__ == "__main__":
-    main()
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)

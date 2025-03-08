@@ -67,9 +67,9 @@ class MQTTConnection:
         self.aioUsername = aioUsername
     #!TODO: change feed ids to match the ones in Adafruit IO
     def connected(self, client: MQTTClient):
-        client.subscribe('pump')
+        client.subscribe('button1')
         client.subscribe('temperature')
-        client.subscribe('moisture')
+        client.subscribe('soil_moisture')
         client.subscribe('humidity')
         print('Connected to Adafruit IO! Listening for feed changes...')
         
@@ -80,13 +80,13 @@ class MQTTConnection:
             case 'temperature':
                 self.temperatureSensor.setTemperature(payload)
                 db.temperature_records.insert_one(self.temperatureSensor.createRecord(self.userId).__dict__())
-            case 'moisture':
+            case 'soil_moisture':
                 self.moistureSensor.setMoisture(payload)
                 db.moisture_records.insert_one(self.moistureSensor.createRecord(self.userId).__dict__())
             case 'humidity':
                 self.humiditySensor.setHumidity(payload)
                 db.humidity_records.insert_one(self.humiditySensor.createRecord(self.userId).__dict__())
-            case 'pump':
+            case 'button1':
                 if payload == 'ON':
                     self.pump.turnOn()
                 elif payload == 'OFF':

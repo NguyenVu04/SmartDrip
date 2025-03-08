@@ -9,3 +9,13 @@ class TemperatureRecord(Record):
 
     def getTemperature(self):
         return self.temperature
+    
+    def __dict__(self):
+        return {
+            "userId": self.userId,
+            "temperature": self.temperature
+        }
+        
+    def from_dict(self, data: dict):
+        self.userId = data["userId"]
+        self.temperature = data["temperature"]
