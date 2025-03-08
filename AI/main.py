@@ -1,7 +1,13 @@
-from fastapi import FastAPI
+from MQTTConnection import MQTTConnection
+from MQTTManager import MQTTManager
+import time
 
-app = FastAPI()
+manager = MQTTManager()
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
+def main():
+    while True:
+        print("Welcome to the AI!")
+        time.sleep(10)
+    
+if __name__ == "__main__":
+    main()

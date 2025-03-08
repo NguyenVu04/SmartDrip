@@ -3,6 +3,7 @@ from Pump import Pump
 from TemperatureSensor import TemperatureSensor
 from MoistureSensor import MoistureSensor
 from HumiditySensor import HumiditySensor
+from MongoConnection import MongoConnection
 
 class MQTTConnection:
     aioKey: str
@@ -30,6 +31,29 @@ class MQTTConnection:
         self.aioClient.connect()
         self.aioClient.loop_background()
         
+    @classmethod
+    def from_dict(cls, attributes: dict):
+        return cls(
+            aioKey=attributes.get('aioKey'),
+            aioUsername=attributes.get('aioUsername'),
+            userId=attributes.get('userId'),
+            pumpFeed=attributes.get('pumpFeed'),
+            temperatureFeed=attributes.get('temperatureFeed'),
+            moistureFeed=attributes.get('moistureFeed'),
+            humidityFeed=attributes.get('humidityFeed')
+        )
+        
+    def __dict__(self):
+        return {
+            'userId': self.userId,
+            'aioKey': self.aioKey,
+            'aioUsername': self.aioUsername,
+            'pumpFeed': self.pump.getFeedId(),
+            'temperatureFeed': self.temperatureSensor.getFeedId(),
+            'moistureFeed': self.moistureSensor.getFeedId(),
+            'humidityFeed': self.humiditySensor.getFeedId()
+        }    
+    
     def getAIOKey(self):
         return self.aioKey
     
@@ -51,18 +75,26 @@ class MQTTConnection:
         
     def message(self, client: MQTTClient, feed_id: str, payload):
         print('Feed {0} received new value: {1}'.format(feed_id, payload))
+        db = MongoConnection().connect()
         match feed_id:
             case 'temperature':
                 self.temperatureSensor.setTemperature(payload)
+                db.temperature_records.insert_one(self.temperatureSensor.createRecord(self.userId).__dict__())
             case 'moisture':
                 self.moistureSensor.setMoisture(payload)
+                db.moisture_records.insert_one(self.moistureSensor.createRecord(self.userId).__dict__())
             case 'humidity':
                 self.humiditySensor.setHumidity(payload)
+                db.humidity_records.insert_one(self.humiditySensor.createRecord(self.userId).__dict__())
             case 'pump':
-                pass #!TODO: implement pump control
+                if payload == 'ON':
+                    self.pump.turnOn()
+                elif payload == 'OFF':
+                    self.pump.turnOff()
+                db.pump_records.insert_one(self.pump.createRecord(self.userId).__dict__())
             
     def subscribe(self, client, userdata, mid, granted_qos):
-        print('Subscribed to {0} with QoS {1}'.format(client, granted_qos))
+        print('Subscribed successfully!')
         
     def disconnect(self):
         print('Disconnected from Adafruit IO!')

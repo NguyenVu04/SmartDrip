@@ -2,7 +2,7 @@ from Device import Device
 from Record import Record
 from TemperatureRecord import TemperatureRecord
 
-class Temperature(Device):
+class TemperatureSensor(Device):
     temperature: float
 
     def __init__(self, feedId: str, temperature: float = 0):
@@ -11,6 +11,9 @@ class Temperature(Device):
         
     def getTemperature(self):
         return self.temperature
+    
+    def setTemperature(self, temperature: float):
+        self.temperature = temperature
     
     def createRecord(self, userId: str) -> Record:
         return TemperatureRecord(userId, self.temperature)
