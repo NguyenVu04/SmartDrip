@@ -1,4 +1,4 @@
-CropType,CropDays,SoilMoisture,temperature,Humidity,Irrigation
+CropType,CropDays,SoilMoisture,Temperature,Humidity,Irrigation
 Wheat,10,400,30,15,0
 Wheat,7,200,30,32,0
 Wheat,9,300,21,28,0
