@@ -3,6 +3,7 @@ from Record import Record
 
 class Device(ABC):
     feedId: str
+    lastRecord: int
     
     def __init__(self, feedId: str):
         self.feedId = feedId

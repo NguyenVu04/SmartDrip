@@ -16,4 +16,6 @@ class TemperatureSensor(Device):
         self.temperature = float(temperature)
     
     def createRecord(self, userId: str) -> Record:
-        return TemperatureRecord(userId, self.temperature)
+        record = TemperatureRecord(userId, self.temperature)
+        self.lastRecord = record.getTimestamp()
+        return record

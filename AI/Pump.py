@@ -16,4 +16,6 @@ class Pump(Device):
         self.isOn = False
     
     def createRecord(self, userId: str) -> Record:
-        return PumpRecord(userId, self.isOn)
+        record = PumpRecord(userId, self.isOn)
+        self.lastRecord = record.getTimestamp()
+        return record

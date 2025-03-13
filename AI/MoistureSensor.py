@@ -16,5 +16,7 @@ class MoistureSensor(Device):
         self.moisture = float(moisture)
     
     def createRecord(self, userId: str) -> Record:
-        return MoistureRecord(userId, self.moisture)
+        record = MoistureRecord(userId, self.moisture)
+        self.lastRecord = record.getTimestamp()
+        return record
         

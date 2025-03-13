@@ -1,10 +1,13 @@
+import time
+from datetime import datetime
+
 class GardenInfo:
     treeType: str
     numOfTree: int
     longitude: float
     latitude: float
     userId: str
-    pumpPower: float
+    cropStart: int
     
     def __init__(self, treeType: str, numOfTree: int, longitude: float, latitude: float, userId: str, pumpPower: float):
         self.treeType = treeType
@@ -12,7 +15,7 @@ class GardenInfo:
         self.longitude = longitude
         self.latitude = latitude
         self.userId = userId
-        self.pumpPower = pumpPower
+        self.cropStart = int(time.time())
         
     def __dict__(self):
         return {
@@ -50,8 +53,8 @@ class GardenInfo:
     def getUserId(self) -> str:
         return self.userId
     
-    def getPumpPower(self) -> float:
-        return self.pumpPower
+    def getCropStart(self) -> int:
+        return self.cropStart
     
     def setTreeType(self, treeType: str):
         self.treeType = treeType
@@ -68,5 +71,8 @@ class GardenInfo:
     def setUserId(self, userId: str):
         self.userId = userId
         
-    def setPumpPower(self, pumpPower: float):
-        self.pumpPower = pumpPower
+    def startCrop(self):
+        self.cropStart = int(time.time())
+        
+    def setStartCrop(self, date_str: str, date_format: str = "%d-%m-%Y"):
+        self.cropStart = datetime.strptime(date_str, date_format)

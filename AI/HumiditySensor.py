@@ -16,4 +16,6 @@ class HumiditySensor(Device):
         self.humidity = float(humidity)
     
     def createRecord(self, userId: str) -> Record:
-        return HumidityRecord(userId, self.humidity)
+        record = HumidityRecord(userId, self.humidity)
+        self.lastRecord = record.getTimestamp()
+        return record
