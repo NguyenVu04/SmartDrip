@@ -27,7 +27,6 @@ class NotificationManager:
             try:
                 await connection.send_text(notification.json())
                 notification.setSeen()
-                DB.insert_one(notification.__dict__())
             except WebSocketDisconnect:
                 self.disconnect(userId, connection)
-                DB.insert_one(notification.__dict__())
+        DB.insert_one(notification.__dict__())

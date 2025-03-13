@@ -2,7 +2,6 @@ from MQTTConnection import MQTTConnection
 from MongoConnection import MongoConnection
 from DeviceData import DeviceData
 
-#!TODO: Change the database name to the actual database name
 DB_CONNECTION = MongoConnection().connect().mqtt
 
 class MQTTManager:

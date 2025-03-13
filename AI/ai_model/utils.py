@@ -4,12 +4,12 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from Model import Net
+from ai_model.Model import Net
 
 IN_FEATURES = 5
 
-def train(dtset: str):
-    data = pd.read_csv('dataset.csv')
+def train(dataset_path: str):
+    data = pd.read_csv(dataset_path)
 
     label_encoder = LabelEncoder()
     data['CropType'] = label_encoder.fit_transform(data['CropType'])
@@ -43,7 +43,7 @@ def train(dtset: str):
         if (epoch+1) % 10 == 0:
             print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
 
-    torch.save(model.state_dict(), 'model.pth')
+    torch.save(model.state_dict(), 'ai_model/model.pth')
 
     model.eval()
     with torch.no_grad():
@@ -52,16 +52,25 @@ def train(dtset: str):
         accuracy = (y_pred.eq(y_test).sum() / float(y_test.shape[0])).item()
         print(f'Accuracy: {accuracy:.4f}')
         
+def cb_to_percentage(cb_value):
+    # Example conversion formula (this is a hypothetical example)
+    percentage = 100 - cb_value * 0.1  # Adjust the formula based on your calibration data
+    return max(0, min(percentage, 100))  # Ensure the percentage is between 0 and 100
+
 def predict(input):
     label_encoder = LabelEncoder()
     scaler = StandardScaler()
     
     model = Net(IN_FEATURES)
-    model.load_state_dict(torch.load("model.pth"))
+    model.load_state_dict(torch.load("ai_model/model.pth"))
     model.eval()
     
     input_df = pd.DataFrame([input])
     input_df['CropType'] = label_encoder.fit_transform(input_df['CropType'])
+    
+    # Convert SoilMoisture from cb to percentage
+    input_df['SoilMoisture'] = input_df['SoilMoisture'].apply(cb_to_percentage)
+    
     input_scaled = scaler.fit_transform(input_df)
     input_tensor = torch.tensor(input_scaled, dtype=torch.float32)
     

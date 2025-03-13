@@ -9,13 +9,16 @@ class GardenInfo:
     userId: str
     cropStart: int
     
-    def __init__(self, treeType: str, numOfTree: int, longitude: float, latitude: float, userId: str, pumpPower: float):
+    def __init__(self, treeType: str, numOfTree: int, longitude: float, latitude: float, userId: str, cropStart: int = None):
         self.treeType = treeType
         self.numOfTree = numOfTree
         self.longitude = longitude
         self.latitude = latitude
         self.userId = userId
-        self.cropStart = int(time.time())
+        if cropStart is None:
+            self.cropStart = int(time.time())
+        else:
+            self.cropStart = cropStart
         
     def __dict__(self):
         return {
@@ -24,7 +27,7 @@ class GardenInfo:
             "longitude": self.longitude,
             "latitude": self.latitude,
             "userId": self.userId,
-            "pumpPower": self.pumpPower
+            "cropStart": self.cropStart
         }
     
     @classmethod
@@ -35,7 +38,7 @@ class GardenInfo:
             longitude = data["longitude"],
             latitude = data["latitude"],
             userId = data["userId"],
-            pumpPower = data["pumpPower"]
+            cropStart = data["cropStart"]
         )
         
     def getTreeType(self) -> str:

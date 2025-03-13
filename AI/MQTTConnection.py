@@ -105,7 +105,11 @@ class MQTTConnection:
         return DeviceData(
             temperature=self.temperatureSensor.getTemperature(),
             moisture=self.moistureSensor.getMoisture(),
-            humidity=self.humiditySensor.getHumidity()
+            humidity=self.humiditySensor.getHumidity(),
+            temperatureLastRecord=self.temperatureSensor.getLastRecord(),
+            moistureLastRecord=self.moistureSensor.getLastRecord(),
+            humidityLastRecord=self.humiditySensor.getLastRecord(),
+            pumpLastRecord=self.pump.getLastRecord()
         )
         
     def activatePump(self):
