@@ -2,12 +2,14 @@ from MQTTConnection import MQTTConnection
 from MongoConnection import MongoConnection
 from DeviceData import DeviceData
 
+#!TODO: Change the database name to the actual database name
+DB_CONNECTION = MongoConnection().connect().mqtt
+
 class MQTTManager:
     connections: dict[str, MQTTConnection] = {}
 
     def __init__(self):
-        db = MongoConnection().connect()["mqtt"]#!TODO: Change the database name to the actual database name
-        for connection in db.find():
+        for connection in DB_CONNECTION.find():
             self.connections[connection.get('userId')] = MQTTConnection.from_dict(connection)
             
     def disconnect(self, userId: str):
@@ -24,7 +26,11 @@ class MQTTManager:
         return DeviceData(
             temperature=self.connections[userId].temperatureSensor.getTemperature(),
             moisture=self.connections[userId].moistureSensor.getMoisture(),
-            humidity=self.connections[userId].humiditySensor.getHumidity()
+            humidity=self.connections[userId].humiditySensor.getHumidity(),
+            temperatureLastRecord=self.connections[userId].temperatureSensor.getLastRecord(),
+            moistureLastRecord=self.connections[userId].moistureSensor.getLastRecord(),
+            humidityLastRecord=self.connections[userId].humiditySensor.getLastRecord(),
+            pumpLastRecord=self.connections[userId].pump.getLastRecord()
         )
         
     def getConnections(self):

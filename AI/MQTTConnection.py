@@ -6,6 +6,8 @@ from HumiditySensor import HumiditySensor
 from MongoConnection import MongoConnection
 from DeviceData import DeviceData
 
+DB_CONNECTION = MongoConnection().connect()
+
 class MQTTConnection:
     aioKey: str
     aioUsername: str
@@ -76,23 +78,22 @@ class MQTTConnection:
         
     def message(self, client: MQTTClient, feed_id: str, payload):
         print('Feed {0} received new value: {1}'.format(feed_id, payload))
-        db = MongoConnection().connect()
         match feed_id:
             case 'temperature':
                 self.temperatureSensor.setTemperature(payload)
-                db.temperature_records.insert_one(self.temperatureSensor.createRecord(self.userId).__dict__())
+                DB_CONNECTION.temperature_records.insert_one(self.temperatureSensor.createRecord(self.userId).__dict__())
             case 'soil_moisture':
                 self.moistureSensor.setMoisture(payload)
-                db.moisture_records.insert_one(self.moistureSensor.createRecord(self.userId).__dict__())
+                DB_CONNECTION.moisture_records.insert_one(self.moistureSensor.createRecord(self.userId).__dict__())
             case 'humidity':
                 self.humiditySensor.setHumidity(payload)
-                db.humidity_records.insert_one(self.humiditySensor.createRecord(self.userId).__dict__())
+                DB_CONNECTION.humidity_records.insert_one(self.humiditySensor.createRecord(self.userId).__dict__())
             case 'button1':
                 if payload == 'ON':
                     self.pump.turnOn()
                 elif payload == 'OFF':
                     self.pump.turnOff()
-                db.pump_records.insert_one(self.pump.createRecord(self.userId).__dict__())
+                DB_CONNECTION.pump_records.insert_one(self.pump.createRecord(self.userId).__dict__())
             
     def subscribe(self, client, userdata, mid, granted_qos):
         print('Subscribed successfully!')

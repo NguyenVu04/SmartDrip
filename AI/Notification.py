@@ -1,7 +1,7 @@
-from datetime import datetime
+import time
+import json
 
 class Notification:
-    _id: int
     timestamp: int
     content: str
     userId: str
@@ -10,7 +10,7 @@ class Notification:
     def __init__(self, content: str, userId: str, seen: bool = False):
         self.content = content
         self.userId = userId
-        self.timestamp = int(datetime.now().timestamp())
+        self.timestamp = int(time.time())
         self.seen = seen
         
     @classmethod
@@ -20,6 +20,20 @@ class Notification:
             userId=attributes.get('userId'),
             seen=True
         )
+        
+    def json(self):
+        return json.dumps({
+            "content": self.content,
+            "timestamp": self.timestamp,
+        })
+        
+    def __dict__(self):
+        return {
+            "timestamp": self.timestamp,
+            "content": self.content,
+            "userId": self.userId,
+            "seen": self.seen,
+        }
         
     def getId(self):
         return self._id
@@ -32,3 +46,6 @@ class Notification:
     
     def isSeen(self):
         return self.seen
+    
+    def setSeen(self):
+        self.seen = True
