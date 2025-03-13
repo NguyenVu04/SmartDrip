@@ -35,3 +35,24 @@ class MQTTManager:
         
     def getConnections(self):
         return self.connections
+    
+    def addConnection(
+        self,
+        aioKey: str,
+        aioUsername: str, 
+        userId: str, pumpFeed: str, 
+        temperatureFeed: str, 
+        moistureFeed: str, 
+        humidityFeed: str
+    ):
+        connection = MQTTConnection(
+            aioKey, 
+            aioUsername, 
+            userId, 
+            pumpFeed, 
+            temperatureFeed, 
+            moistureFeed, 
+            humidityFeed
+        )
+        self.connections[userId] = connection
+        DB_CONNECTION.insert_one(connection.__dict__())

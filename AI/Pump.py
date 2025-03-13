@@ -5,7 +5,7 @@ from Record import Record
 class Pump(Device):
     isOn: bool
 
-    def __init__(self, feedId: str, isOn: bool = False, power: float = 0):
+    def __init__(self, feedId: str, isOn: bool = False):
         super().__init__(feedId)
         self.isOn = isOn
         

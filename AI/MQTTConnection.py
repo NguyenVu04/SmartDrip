@@ -22,7 +22,7 @@ class MQTTConnection:
         self.aioKey = aioKey
         self.aioUsername = aioUsername
         self.userId = userId
-        self.pump = Pump(pumpFeed, False, 10)#!init pump with 10 kW
+        self.pump = Pump(pumpFeed, False)
         self.temperatureSensor = TemperatureSensor(temperatureFeed)
         self.moistureSensor = MoistureSensor(moistureFeed)
         self.humiditySensor = HumiditySensor(humidityFeed)
