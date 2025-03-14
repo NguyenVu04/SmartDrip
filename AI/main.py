@@ -90,6 +90,11 @@ def write_root(body: MQTTConnectionModel):
     )
     return JSONResponse({"status": "success", "message": "MQTT Connection added successfully"})
 
+@app.delete("/{userId}")
+def delete_root(userId: str):
+    mqttManager.removeConnection(userId)
+    return JSONResponse({"status": "success", "message": "MQTT Connection removed successfully"})
+
 @app.websocket("/notifications/{userId}")
 async def notifications(websocket: WebSocket, userId: str):
     await notificationManager.connect(websocket, userId)

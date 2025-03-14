@@ -55,3 +55,10 @@ class MQTTManager:
         )
         self.connections[userId] = connection
         DB_CONNECTION.insert_one(connection.__dict__())
+        
+    def removeConnection(self, userId: str):
+        connection = self.connections.get(userId, None)
+        if connection:
+            connection.disconnect()
+            self.connections.pop(userId)
+        DB_CONNECTION.delete_one({"userId": userId})

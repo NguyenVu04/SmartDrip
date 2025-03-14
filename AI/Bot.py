@@ -8,7 +8,7 @@ import time
 from NotificationManager import NotificationManager
 
 #! TODO: change to 60 * 5
-SLEEP_TIME = 60 * 1 # seconds
+SLEEP_TIME = 10 * 1 # seconds
 DB = MongoConnection().connect().garden_info
 
 class Bot:

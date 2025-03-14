@@ -30,7 +30,6 @@ class MQTTConnection:
         self.aioClient.on_connect = self.connected
         self.aioClient.on_message = self.message
         self.aioClient.on_subscribe = self.subscribe
-        self.aioClient.disconnect = self.disconnect
         self.aioClient.connect()
         self.aioClient.loop_background()
         
@@ -99,7 +98,7 @@ class MQTTConnection:
         print('Subscribed successfully!')
         
     def disconnect(self):
-        print('Disconnected from Adafruit IO!')
+        self.aioClient.disconnect()
         
     def getDeviceData(self):
         return DeviceData(
