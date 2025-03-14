@@ -49,14 +49,14 @@ class SignupModel(BaseModel):
 
 @app.post("/signup")
 def signup(body: SignupModel):
-    user = DB_CONNECTION.users.insert_one({
+    user = str(DB_CONNECTION.users.insert_one({
         "firstName": body.firstName,
         "lastName": body.lastName,
         "email": body.email,
         "address": body.address,
         "phoneNumber": body.phoneNumber,
         "role": body.role
-    }).inserted_id
+    }).inserted_id)
     
     mqttManager.addConnection(
         body.aioKey,
@@ -92,13 +92,14 @@ def write_root(body: MQTTConnectionModel):
 
 @app.websocket("/notifications/{userId}")
 async def notifications(websocket: WebSocket, userId: str):
-    await websocket.accept()
-    try:
-        while True:
+    await notificationManager.connect(websocket, userId)
+    while True:
+        try:
             await websocket.send_text(Notification(None, userId).json())
             await asyncio.sleep(8)
-    except WebSocketDisconnect:
-        notificationManager.disconnect(userId)
+        except Exception:
+            await notificationManager.disconnect(userId, websocket)
+            break
 
 if __name__ == "__main__":
     import uvicorn

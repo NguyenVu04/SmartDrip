@@ -2,6 +2,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from ai_model.Model import Net
@@ -13,7 +14,8 @@ def train(dataset_path: str):
 
     label_encoder = LabelEncoder()
     data['CropType'] = label_encoder.fit_transform(data['CropType'])
-
+    data['SoilMoisture'] = data['SoilMoisture'].apply(cb_to_percentage)
+    
     X = data.drop('Irrigation', axis=1).values
     y = data['Irrigation'].values
 
@@ -44,6 +46,8 @@ def train(dataset_path: str):
             print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
 
     torch.save(model.state_dict(), 'ai_model/model.pth')
+    joblib.dump(label_encoder, 'ai_model/label_encoder.pkl')
+    joblib.dump(scaler, 'ai_model/scaler.pkl')
 
     model.eval()
     with torch.no_grad():
@@ -53,25 +57,21 @@ def train(dataset_path: str):
         print(f'Accuracy: {accuracy:.4f}')
         
 def cb_to_percentage(cb_value):
-    # Example conversion formula (this is a hypothetical example)
-    percentage = 100 - cb_value * 0.1  # Adjust the formula based on your calibration data
-    return max(0, min(percentage, 100))  # Ensure the percentage is between 0 and 100
+    percentage = 100 - cb_value * 0.1 
+    return max(0, min(percentage, 100))
 
-def predict(input):
-    label_encoder = LabelEncoder()
-    scaler = StandardScaler()
+def predict(input_data): #! SoilMoisture use percentage
+    label_encoder = joblib.load('ai_model/label_encoder.pkl')
+    scaler = joblib.load('ai_model/scaler.pkl')
     
     model = Net(IN_FEATURES)
     model.load_state_dict(torch.load("ai_model/model.pth"))
     model.eval()
     
-    input_df = pd.DataFrame([input])
-    input_df['CropType'] = label_encoder.fit_transform(input_df['CropType'])
+    input_df = pd.DataFrame([input_data])
+    input_df['CropType'] = label_encoder.transform(input_df['CropType'])
     
-    # Convert SoilMoisture from cb to percentage
-    input_df['SoilMoisture'] = input_df['SoilMoisture'].apply(cb_to_percentage)
-    
-    input_scaled = scaler.fit_transform(input_df)
+    input_scaled = scaler.transform(input_df.values)
     input_tensor = torch.tensor(input_scaled, dtype=torch.float32)
     
     with torch.no_grad():
@@ -79,3 +79,15 @@ def predict(input):
         prediction = prediction.round().item()
         irrigation_needed = bool(prediction)
         return irrigation_needed
+
+# Example input data
+# input_data = {
+#     'CropType': 'Wheat',
+#     'CropDays': 106,
+#     'SoilMoisture': 39.9,
+#     'Temperature': 35,
+#     'Humidity': 35
+# }
+
+# irrigation_needed = predict(input_data)
+# print(f'Irrigation needed: {irrigation_needed}')

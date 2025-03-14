@@ -6,7 +6,6 @@ from MongoConnection import MongoConnection
 from ai_model import utils
 import time
 from NotificationManager import NotificationManager
-import asyncio
 
 #! TODO: change to 60 * 5
 SLEEP_TIME = 60 * 1 # seconds
@@ -22,35 +21,25 @@ class Bot:
         self.mqttManager = mqttManager
         self.notificationManager = notificationManager
         self.stopEvent = threading.Event()
-        self.mainThread = threading.Thread(target=self.loop)
+        self.mainThread = threading.Thread(target=self.loop_thread)
         self.mainThread.start()
         
     def getResult(self, deviceData: DeviceData, gardenInfo: GardenInfo) -> bool:
-        # if (deviceData.temperatureLastRecord - gardenInfo.getCropStart() > SLEEP_TIME):
-        #     asyncio.run_coroutine_threadsafe(
-        #         self.notificationManager.send_message("Temperature sensor has lost connection", gardenInfo.getUserId()), 
-        #         loop
-        #     )
-        #     print("Temperature sensor has lost connection")
-        #     return False
+        current = int(time.time())
+        if (current - deviceData.temperatureLastRecord > SLEEP_TIME):
+            self.notificationManager.send_message("Temperature sensor has lost connection", gardenInfo.getUserId()), 
+            return False
         
-        # if (deviceData.humidityLastRecord - gardenInfo.getCropStart() > SLEEP_TIME):
-        #     asyncio.run_coroutine_threadsafe(
-        #         self.notificationManager.send_message("Humidity sensor has lost connection", gardenInfo.getUserId()), 
-        #         loop
-        #     )
-        #     print("Humidity sensor has lost connection")
-        #     return False
+        if (current - deviceData.humidityLastRecord > SLEEP_TIME):
+            self.notificationManager.send_message("Humidity sensor has lost connection", gardenInfo.getUserId()), 
+            return False
         
-        # if (deviceData.moistureLastRecord - gardenInfo.getCropStart() > SLEEP_TIME):
-        #     asyncio.run_coroutine_threadsafe(
-        #         self.notificationManager.send_message("Moisture sensor has lost connection", gardenInfo.getUserId()), 
-        #         loop
-        #     )
-        #     print("Moisture sensor has lost connection")
-        #     return False
+        if (current - deviceData.moistureLastRecord > SLEEP_TIME):
+            self.notificationManager.send_message("Moisture sensor has lost connection", gardenInfo.getUserId()), 
+            return False
         
-        cropDays = (max(deviceData.temperatureLastRecord, deviceData.humidityLastRecord, deviceData.moistureLastRecord) - gardenInfo.getCropStart()) / 86400
+        cropDays = (current - gardenInfo.getCropStart()) / 86400
+        # cropDays = 106
         
         input = {
             'CropType': gardenInfo.getTreeType(),
@@ -59,30 +48,20 @@ class Bot:
             'Temperature': deviceData.temperature,
             'Humidity': deviceData.humidity
         }
-        
         return utils.predict(input)
         
-    def loop(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        
-        while not self.stopEvent.is_set():
-            time.sleep(SLEEP_TIME)     
+    def loop_thread(self):
+        while not self.stopEvent.wait(timeout=SLEEP_TIME):
             for userId, connection in self.mqttManager.getConnections().items():
                 gardenInfo = GardenInfo.from_dict(DB.find_one({"userId": userId}))
                 deviceData = connection.getDeviceData()
-                if self.getResult(deviceData, gardenInfo):
+                result = self.getResult(deviceData, gardenInfo)
+                if result:
                     connection.activatePump()
-                    asyncio.run_coroutine_threadsafe(
-                        self.notificationManager.send_message("Pump is activated", userId), 
-                        loop
-                    )
+                    self.notificationManager.send_message("Pump is activated", userId), 
                 else:
                     connection.deactivatePump()
-                    asyncio.run_coroutine_threadsafe(
-                        self.notificationManager.send_message("Pump is deactivated", userId), 
-                        loop
-                    )
+                    self.notificationManager.send_message("Pump is deactivated", userId), 
             
     def stop(self):
         self.stopEvent.set()
