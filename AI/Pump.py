@@ -5,7 +5,7 @@ from Record import Record
 class Pump(Device):
     isOn: bool
 
-    def __init__(self, feedId: str, isOn: bool = False, power: float = 0):
+    def __init__(self, feedId: str, isOn: bool = False):
         super().__init__(feedId)
         self.isOn = isOn
         
@@ -16,4 +16,6 @@ class Pump(Device):
         self.isOn = False
     
     def createRecord(self, userId: str) -> Record:
-        return PumpRecord(userId, self.isOn)
+        record = PumpRecord(userId, self.isOn)
+        self.lastRecord = record.getTimestamp()
+        return record
