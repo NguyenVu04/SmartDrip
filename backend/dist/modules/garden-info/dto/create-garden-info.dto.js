@@ -34,4 +34,8 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], CreateGardenInfoDto.prototype, "latitude", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Date)
+], CreateGardenInfoDto.prototype, "cropStart", void 0);
 //# sourceMappingURL=create-garden-info.dto.js.map

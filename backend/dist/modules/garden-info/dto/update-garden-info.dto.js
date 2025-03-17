@@ -10,14 +10,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateGardenInfoDto = void 0;
-const mapped_types_1 = require("@nestjs/mapped-types");
-const create_garden_info_dto_1 = require("./create-garden-info.dto");
 const class_validator_1 = require("class-validator");
-class UpdateGardenInfoDto extends (0, mapped_types_1.PartialType)(create_garden_info_dto_1.CreateGardenInfoDto) {
+class UpdateGardenInfoDto {
 }
 exports.UpdateGardenInfoDto = UpdateGardenInfoDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateGardenInfoDto.prototype, "_id", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateGardenInfoDto.prototype, "longitude", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateGardenInfoDto.prototype, "treeType", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateGardenInfoDto.prototype, "latitude", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateGardenInfoDto.prototype, "numOfTree", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Date)
+], UpdateGardenInfoDto.prototype, "cropStart", void 0);
 //# sourceMappingURL=update-garden-info.dto.js.map

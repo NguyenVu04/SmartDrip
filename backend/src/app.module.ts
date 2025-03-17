@@ -14,8 +14,12 @@ import { HumidityRecordsModule } from './modules/humidity-records/humidity-recor
 import { MoistureRecordsModule } from './modules/moisture-records/moisture-records.module';
 import { PumpRecordsModule } from './modules/pump-records/pump-records.module';
 import { TemperatureRecordsModule } from './modules/temperature-records/temperature-records.module';
+import { MqttModule } from './modules/mqtt/mqtt.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 @Module({
   imports: [
+    NotificationsModule,
+    MqttModule,
     MoistureRecordsModule,
     UsersModule,
     HumidityRecordsModule,

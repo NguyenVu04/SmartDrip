@@ -15,11 +15,6 @@ class UpdateUserDto {
 }
 exports.UpdateUserDto = UpdateUserDto;
 __decorate([
-    (0, class_validator_1.IsMongoId)({ message: 'Invalid ID' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'User ID is required' }),
-    __metadata("design:type", String)
-], UpdateUserDto.prototype, "_id", void 0);
-__decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "firstName", void 0);

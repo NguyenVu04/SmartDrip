@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { NotificationsService } from './notifications.service';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
@@ -8,27 +8,40 @@ export class NotificationsController {
   constructor(private readonly notificationsService: NotificationsService) {}
 
   @Post()
-  create(@Body() createNotificationDto: CreateNotificationDto) {
+  async create(@Body() createNotificationDto: CreateNotificationDto) {
     return this.notificationsService.create(createNotificationDto);
   }
 
   @Get()
-  findAll() {
-    return this.notificationsService.findAll();
+  async findAll(
+    @Query() query: string,
+    @Query("current") current: string,
+    @Query("pageSize") pageSize: string,
+  ) {
+    return this.notificationsService.findAll(query, +current, +pageSize);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.notificationsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return this.notificationsService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNotificationDto: UpdateNotificationDto) {
-    return this.notificationsService.update(+id, updateNotificationDto);
+  @Get('userId')
+  async findByUserId(
+    @Query('userId') userId: string,
+    @Query("current") current: string,
+    @Query("pageSize") pageSize: string,
+  
+  ) {
+    return this.notificationsService.findByUserId(userId, +current, +pageSize);
+  }
+  @Patch()
+  async update(@Body() updateNotificationDto: UpdateNotificationDto) {
+    return this.notificationsService.update(updateNotificationDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.notificationsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return this.notificationsService.remove(id);
   }
 }

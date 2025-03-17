@@ -4,4 +4,5 @@ export declare class CreateGardenInfoDto {
     numOfTree: number;
     longitude: number;
     latitude: number;
+    cropStart: Date;
 }

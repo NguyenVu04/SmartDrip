@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { MqttService } from './mqtt.service';
 import { CreateMqttDto } from './dto/create-mqtt.dto';
 import { UpdateMqttDto } from './dto/update-mqtt.dto';
@@ -8,27 +8,38 @@ export class MqttController {
   constructor(private readonly mqttService: MqttService) {}
 
   @Post()
-  create(@Body() createMqttDto: CreateMqttDto) {
-    return this.mqttService.create(createMqttDto);
+  async create(@Body() createMqttDto: CreateMqttDto) {
+    return await this.mqttService.create(createMqttDto);
   }
 
   @Get()
-  findAll() {
-    return this.mqttService.findAll();
+  async findAll(
+    @Query() query: string,
+    @Query("current") current: string,
+    @Query("pageSize") pageSize: string,
+  ) {
+    return await this.mqttService.findAll(query, +current, +pageSize);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mqttService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.mqttService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMqttDto: UpdateMqttDto) {
-    return this.mqttService.update(+id, updateMqttDto);
+  async update(
+    @Param('id') _id: string,
+    @Body() updateMqttDto: UpdateMqttDto) {
+    return await this.mqttService.updateById(_id, updateMqttDto);
+  }
+
+  @Patch('user/:userId')
+  async updateByUserId(@Param('userId') userId: string, @Body() updateMqttDto: UpdateMqttDto) {
+    return await this.mqttService.updateByUserId(userId, updateMqttDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mqttService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.mqttService.removeByUserId(id);
   }
 }

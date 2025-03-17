@@ -28,13 +28,10 @@ let GardenInfoController = class GardenInfoController {
         return this.gardenInfoService.findAll(query, +current, +pageSize);
     }
     async findOne(id) {
-        return this.gardenInfoService.findOne(+id);
+        return this.gardenInfoService.findOne(id);
     }
     async update(id, updateGardenInfoDto) {
         return this.gardenInfoService.update(+id, updateGardenInfoDto);
-    }
-    async remove(id) {
-        return this.gardenInfoService.remove(id);
     }
 };
 exports.GardenInfoController = GardenInfoController;
@@ -69,13 +66,6 @@ __decorate([
     __metadata("design:paramtypes", [String, update_garden_info_dto_1.UpdateGardenInfoDto]),
     __metadata("design:returntype", Promise)
 ], GardenInfoController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], GardenInfoController.prototype, "remove", null);
 exports.GardenInfoController = GardenInfoController = __decorate([
     (0, common_1.Controller)('garden-info'),
     __metadata("design:paramtypes", [garden_info_service_1.GardenInfoService])

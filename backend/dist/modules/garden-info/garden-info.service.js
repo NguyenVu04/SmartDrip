@@ -72,7 +72,7 @@ let GardenInfoService = class GardenInfoService {
         return user;
     }
     async create(createGardenInfoDto) {
-        const { userId, treeType, numOfTree, longitude, latitude } = createGardenInfoDto;
+        const { userId, treeType, numOfTree, longitude, latitude, cropStart } = createGardenInfoDto;
         const isExistUser = await this.IsExistThisUser(userId);
         if (!isExistUser) {
             throw new common_1.BadRequestException('User not found');
@@ -82,7 +82,7 @@ let GardenInfoService = class GardenInfoService {
             throw new common_1.BadRequestException('This user already has a garden');
         }
         const gardenInfo = await this.gardenInfoModel.create({
-            userId, treeType, numOfTree, longitude, latitude
+            userId, treeType, numOfTree, longitude, latitude, cropStart
         });
         return {
             _id: gardenInfo._id,

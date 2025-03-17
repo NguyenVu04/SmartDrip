@@ -127,8 +127,7 @@ let UsersService = class UsersService {
             throw new common_1.BadRequestException(`Invalid id ${_id}`);
         }
     }
-    update(id, updateUserDto) {
-        return `This action updates a #${id} user`;
+    update(updateUserDto) {
     }
     async remove(_id) {
         if (mongoose_2.default.isValidObjectId(_id)) {

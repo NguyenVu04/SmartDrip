@@ -23,16 +23,16 @@ export class GardenInfoController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.gardenInfoService.findOne(+id);
+    return this.gardenInfoService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch(':id') // done
   async update(@Param('id') id: string, @Body() updateGardenInfoDto: UpdateGardenInfoDto) {
     return this.gardenInfoService.update(+id, updateGardenInfoDto);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.gardenInfoService.remove(id);
-  }
+  // @Delete(':id') // done
+  // async remove(@Param('id') id: string) {
+  //   return this.gardenInfoService.remove(id);
+  // }
 }

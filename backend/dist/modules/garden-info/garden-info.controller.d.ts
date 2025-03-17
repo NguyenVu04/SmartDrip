@@ -25,5 +25,4 @@ export declare class GardenInfoController {
         __v: number;
     }) | null>;
     update(id: string, updateGardenInfoDto: UpdateGardenInfoDto): Promise<import("mongoose").UpdateWriteOpResult>;
-    remove(id: string): Promise<import("mongodb").DeleteResult>;
 }

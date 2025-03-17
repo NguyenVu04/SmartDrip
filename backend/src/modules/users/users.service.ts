@@ -86,8 +86,7 @@ export class UsersService {
       throw new BadRequestException(`Invalid id ${_id}`)
     }
   }
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(updateUserDto: UpdateUserDto) {
   }
 
   async remove(_id:  string) {

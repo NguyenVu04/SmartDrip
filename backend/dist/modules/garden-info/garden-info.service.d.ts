@@ -26,7 +26,7 @@ export declare class GardenInfoService {
         current: number;
         pageSize: number;
     }>;
-    findOne(id: number): Promise<(mongoose.Document<unknown, {}, GardenInfo> & GardenInfo & {
+    findOne(id: string): Promise<(mongoose.Document<unknown, {}, GardenInfo> & GardenInfo & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;

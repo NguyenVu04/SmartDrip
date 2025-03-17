@@ -5,6 +5,7 @@ export declare class GardenInfo {
     numOfTree: number;
     longitude: number;
     latitude: number;
+    cropStart: Date;
     userId: string;
 }
 export declare const GardenInfoSchema: import("mongoose").Schema<GardenInfo, import("mongoose").Model<GardenInfo, any, any, any, import("mongoose").Document<unknown, any, GardenInfo> & GardenInfo & {

@@ -1,10 +1,16 @@
+import { IsNotEmpty, IsOptional } from "class-validator"
 
 export class UpdateMqttDto {
-    userId: string
+    @IsOptional()
     aioKey: string
+    @IsOptional()
     aioUsername: string
+    @IsOptional()
     pumpFeed: string
+    @IsOptional()
     temperatureFeed: string
+    @IsOptional()
     moistureFeed: string
+    @IsOptional()
     humidityFeed: string
 }

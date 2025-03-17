@@ -8,11 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GardenInfoSchema = exports.GardenInfo = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const class_validator_1 = require("class-validator");
+const dayjs_1 = __importDefault(require("dayjs"));
 let GardenInfo = class GardenInfo {
+    constructor() {
+        this.treeType = 'Wheat';
+        this.cropStart = (0, dayjs_1.default)().toDate();
+    }
 };
 exports.GardenInfo = GardenInfo;
 __decorate([
@@ -31,6 +39,10 @@ __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", Number)
 ], GardenInfo.prototype, "latitude", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Date)
+], GardenInfo.prototype, "cropStart", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     (0, class_validator_1.IsNotEmpty)(),

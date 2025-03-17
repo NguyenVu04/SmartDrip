@@ -23,12 +23,16 @@ const humidity_records_module_1 = require("./modules/humidity-records/humidity-r
 const moisture_records_module_1 = require("./modules/moisture-records/moisture-records.module");
 const pump_records_module_1 = require("./modules/pump-records/pump-records.module");
 const temperature_records_module_1 = require("./modules/temperature-records/temperature-records.module");
+const mqtt_module_1 = require("./modules/mqtt/mqtt.module");
+const notifications_module_1 = require("./modules/notifications/notifications.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            notifications_module_1.NotificationsModule,
+            mqtt_module_1.MqttModule,
             moisture_records_module_1.MoistureRecordsModule,
             users_module_1.UsersModule,
             humidity_records_module_1.HumidityRecordsModule,

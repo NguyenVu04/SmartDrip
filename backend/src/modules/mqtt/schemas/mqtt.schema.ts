@@ -6,7 +6,7 @@ export type MqttDocument = HydratedDocument<Mqtt>;
 @Schema()
 export class Mqtt {
     
-    @Prop()
+    @Prop({ unique: true }) 
     userId: string
 
     @Prop()
