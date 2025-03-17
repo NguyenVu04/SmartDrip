@@ -19,6 +19,9 @@ export class GardenInfo {
     latitude: number
 
     @Prop()
+    cropStart: Date
+    
+    @Prop()
     @IsNotEmpty()
     userId: string
 }

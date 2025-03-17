@@ -10,4 +10,5 @@ export class UpdateGardenInfoDto extends PartialType(CreateGardenInfoDto) {
     longitude: number;
     latitude: number;
     numOfTree: number;
+    cropStart: Date;
 }

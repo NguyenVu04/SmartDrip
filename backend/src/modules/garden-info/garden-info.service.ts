@@ -5,7 +5,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { GardenInfo } from './schemas/garden-info.schema';
 import mongoose, { Model } from 'mongoose';
 import aqp from 'api-query-params';
-import { User } from '../users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -29,7 +28,7 @@ export class GardenInfoService {
     return user;
   }
   async create(createGardenInfoDto: CreateGardenInfoDto) {
-    const {userId, treeType, numOfTree, longitude, latitude} = createGardenInfoDto;
+    const {userId, treeType, numOfTree, longitude, latitude, cropStart} = createGardenInfoDto;
     const isExistUser = await this.IsExistThisUser(userId);
     if (!isExistUser) {
       throw new BadRequestException('User not found');
@@ -41,7 +40,7 @@ export class GardenInfoService {
     } 
 
     const gardenInfo = await this.gardenInfoModel.create({
-      userId, treeType, numOfTree, longitude, latitude
+      userId, treeType, numOfTree, longitude, latitude, cropStart
     })
 
     return {

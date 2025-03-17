@@ -18,6 +18,8 @@ export class CreateGardenInfoDto {
     @IsOptional()
     latitude: number
 
+    @IsOptional()
+    cropStart: Date
 }
 
 // @Prop()
