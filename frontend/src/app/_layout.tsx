@@ -15,6 +15,7 @@ export default function RootLayout() {
                     <Stack>
                         <Stack.Screen name="index" options={{ title: "Home" }} />
                         <Stack.Screen name="(auth)" options={{ title: "Authentication" }} />
+                        <Stack.Screen name="(private)" options={{ headerShown: false }} />
                     </Stack>
                 </UtilityProvider>
             </GluestackUIProvider>

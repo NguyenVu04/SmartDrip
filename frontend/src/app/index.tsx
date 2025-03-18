@@ -30,6 +30,26 @@ export default function Index() {
                         <ButtonText>Forgot password</ButtonText>
                     </Button>
 
+                    <Button size="xl" className="w-full rounded-lg bg-primary-500" onPress={() => router.push("/user/dashboard")}>
+                        <ButtonText>User Dashboard</ButtonText>
+                    </Button>
+
+                    <Button size="xl" className="w-full rounded-lg bg-primary-500" onPress={() => router.push("/user/history")}>
+                        <ButtonText>Watering History</ButtonText>
+                    </Button>
+
+                    <Button size="xl" className="w-full rounded-lg bg-primary-500" onPress={() => router.push("/user/menu")}>
+                        <ButtonText>User Menu</ButtonText>
+                    </Button>
+
+                    <Button size="xl" className="w-full rounded-lg bg-primary-500" onPress={() => router.push("/admin/dashboard")}>
+                        <ButtonText>Admin Dashboard</ButtonText>
+                    </Button>
+
+                    <Button size="xl" className="w-full rounded-lg bg-primary-500" onPress={() => router.push("/admin/menu")}>
+                        <ButtonText>Admin Menu</ButtonText>
+                    </Button>
+
                     <Button size="xl" className="w-full rounded-lg bg-primary-500" onPress={() => {pushSuccess({title: "Success", message: "This is a success notification"})}}>
                         <ButtonText>Push success notification</ButtonText>
                     </Button>

@@ -1,7 +1,7 @@
 import { BigLogo } from "@/src/components/custom/Logo";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Eye, EyeClosed, Lock, Mail } from 'lucide-react-native';
 import { Button, ButtonText, Center, FormControl, Heading, HStack, Icon, Input, InputField, InputSlot, VStack } from "@/src/components/ui";
 import { useUtility } from "@/src/context/utiliity";
@@ -9,6 +9,7 @@ import { useUtility } from "@/src/context/utiliity";
 
 
 export default function AdminSignin() {
+    const router = useRouter();
     const { pushSuccess, pushError } = useUtility();
 
     const [signinPayload, setSigninPayload] = useState<SigninPayload>({ email: "", password: "" });
@@ -16,6 +17,7 @@ export default function AdminSignin() {
 
     const submit = () => {
         pushSuccess({ title: "Sign in successful!" });
+        router.push("/admin/dashboard");
     }
 
     return (
@@ -29,7 +31,7 @@ export default function AdminSignin() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={Mail} size="lg" />
+                                <Icon as={Mail} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField placeholder="Email" />
                         </Input>
@@ -38,11 +40,11 @@ export default function AdminSignin() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={Lock} size="lg" />
+                                <Icon as={Lock} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField type={isShowPassword ? "text" : "password"} placeholder="Password" />
                             <InputSlot onTouchStart={() => setIsShowPassword(!isShowPassword)} >
-                                {!isShowPassword ? <Icon as={Eye} size="lg" /> : <Icon as={EyeClosed} size="lg" />}
+                                {!isShowPassword ? <Icon as={Eye} size="lg" className="text-primary-500" /> : <Icon as={EyeClosed} size="lg" className="text-primary-500" />}
                             </InputSlot>
                         </Input>
                     </FormControl>

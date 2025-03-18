@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { ScrollView } from "react-native";
 import AlternativeSigninButtons from "../components/AlternativeSigninButtons";
 import { Button, ButtonText, Center, Divider, FormControl, Heading, HStack, Icon, Input, InputField, InputSlot, Text, VStack } from "@/src/components/ui";
@@ -8,12 +8,14 @@ import { useState } from "react";
 import { useUtility } from "@/src/context/utiliity";
 
 export default function UserSignin() {
+    const router = useRouter();
     const { pushSuccess, pushError } = useUtility();
 
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
 
     const submit = () => {
         pushSuccess({ title: "Sign in successful!" });
+        router.push("/user/dashboard");
     }
 
     return (
@@ -27,7 +29,7 @@ export default function UserSignin() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={Mail} size="lg" />
+                                <Icon as={Mail} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField placeholder="Email" />
                         </Input>
@@ -36,11 +38,11 @@ export default function UserSignin() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={Lock} size="lg" />
+                                <Icon as={Lock} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField type={isShowPassword ? "text" : "password"} placeholder="Password" />
                             <InputSlot onTouchStart={() => setIsShowPassword(!isShowPassword)} >
-                                {!isShowPassword ? <Icon as={Eye} size="lg" /> : <Icon as={EyeClosed} size="lg" />}
+                                {!isShowPassword ? <Icon as={Eye} size="lg" className="text-primary-500" /> : <Icon as={EyeClosed} size="lg" className="text-primary-500" />}
                             </InputSlot>
                         </Input>
                     </FormControl>

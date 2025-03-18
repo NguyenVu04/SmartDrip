@@ -29,11 +29,11 @@ export default function ResetPassword() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={Lock} size="lg" />
+                                <Icon as={Lock} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField type={isShowPassword ? "text" : "password"} placeholder="Password" />
                             <InputSlot onTouchStart={() => setIsShowPassword(!isShowPassword)} >
-                                {!isShowPassword ? <Icon as={Eye} size="xl" /> : <Icon as={EyeClosed} size="xl" />}
+                                {!isShowPassword ? <Icon as={Eye} size="lg" className="text-primary-500" /> : <Icon as={EyeClosed} size="lg" className="text-primary-500" />}
                             </InputSlot>
                         </Input>
                     </FormControl>
@@ -41,11 +41,11 @@ export default function ResetPassword() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={LockKeyhole} size="lg" />
+                                <Icon as={LockKeyhole} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField type={isShowConfirmPassword ? "text" : "password"} placeholder="Confirm Password" />
                             <InputSlot onTouchStart={() => setIsShowConfirmPassword(!isShowConfirmPassword)} >
-                                {!isShowConfirmPassword ? <Icon as={Eye} size="lg" /> : <Icon as={EyeClosed} size="lg" />}
+                                {!isShowConfirmPassword ? <Icon as={Eye} size="lg" className="text-primary-500" /> : <Icon as={EyeClosed} size="lg" className="text-primary-500" />}
                             </InputSlot>
                         </Input>
                     </FormControl>

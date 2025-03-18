@@ -49,8 +49,17 @@ export default function UtilityProvider({ children }: Props) {
     }
 
     const pushToast = (type: ToastType, notification: NotificationType) => {
+        const cloneToastIdList = [...toastIdList];
+        if (cloneToastIdList.length >= maxNumberOfToasts) {
+            const firstToastId = cloneToastIdList.shift();
+            if (firstToastId) {
+                toast.close(firstToastId);
+            }
+        }
+        
         const toastId = Math.random().toString();
-        controlToastLimit(toastId);
+        cloneToastIdList.push(toastId.toString());
+        setToastIdList(cloneToastIdList);
 
         if (notification.status === 401) {
             // Handle unauthorized error
@@ -84,18 +93,6 @@ export default function UtilityProvider({ children }: Props) {
     const pushAlertDialog = (alret: AlertType) => {
         setShowAlertDialog(true)
         setAlert(alret)
-    }
-
-    const controlToastLimit = (id: string) => {
-        const cloneToastIdList = [...toastIdList];
-        if (cloneToastIdList.length >= maxNumberOfToasts) {
-            const firstToastId = cloneToastIdList.shift();
-            if (firstToastId) {
-                toast.close(firstToastId);
-            }
-        }
-        cloneToastIdList.push(id.toString());
-        setToastIdList(cloneToastIdList);
     }
 
     const value = {

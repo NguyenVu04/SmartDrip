@@ -26,7 +26,7 @@ export default function ForgotPasswordVerifyOTP() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={RectangleEllipsis} size="lg" />
+                                <Icon as={RectangleEllipsis} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField keyboardType="number-pad" placeholder="OTP" />
                         </Input>

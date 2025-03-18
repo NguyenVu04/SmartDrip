@@ -26,7 +26,7 @@ export default function ForgotPassword() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
-                                <Icon as={Phone} size="lg" />
+                                <Icon as={Phone} size="lg" className="text-primary-500" />
                             </InputSlot>
                             <InputField keyboardType="number-pad" placeholder="Enter phone number" />
                         </Input>
