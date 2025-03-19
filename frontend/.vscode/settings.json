@@ -1,0 +1,14 @@
+{
+    "editor.tabSize": 4,
+    "files.exclude": {
+		"node_modules/": true,
+        ".expo/": false,
+        "package-lock.json": true,
+        ".gitignore": true,
+        "babel.config.js": true,
+        "expo-env.d.ts": true,
+        "metro.config.js": true,
+        "nativewind-env.d.ts": true,
+        ".npmrc": true,
+	}
+}
