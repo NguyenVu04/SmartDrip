@@ -2,8 +2,12 @@ from fastapi import WebSocket, WebSocketDisconnect
 from Notification import Notification
 from MongoConnection import MongoConnection
 import asyncio
+from dotenv import load_dotenv
+import os
 
-DB = MongoConnection().connect().notifications
+load_dotenv()
+
+DB = MongoConnection().connect()[os.getenv("NOTIFICATIONS_COLLECTION")]
 
 class NotificationManager:
     def __init__(self):

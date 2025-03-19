@@ -1,8 +1,12 @@
 from MQTTConnection import MQTTConnection
 from MongoConnection import MongoConnection
 from DeviceData import DeviceData
+from dotenv import load_dotenv
+import os
 
-DB_CONNECTION = MongoConnection().connect().mqtt
+load_dotenv()
+
+DB_CONNECTION = MongoConnection().connect()[os.getenv("MQTT_COLLECTION")]
 
 class MQTTManager:
     connections: dict[str, MQTTConnection] = {}
@@ -14,6 +18,11 @@ class MQTTManager:
     def disconnect(self, userId: str):
         self.connections[userId].aioClient.disconnect()
         self.connections.pop(userId)
+        
+    def disconnectAll(self):
+        for userId in self.connections.keys():
+            self.connections[userId].aioClient.disconnect()
+        self.connections = {}
         
     def activatePump(self, userId: str):
         self.connections[userId].pump.turnOn()

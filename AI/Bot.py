@@ -6,10 +6,14 @@ from MongoConnection import MongoConnection
 from ai_model import utils
 import time
 from NotificationManager import NotificationManager
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 #! TODO: change to 60 * 5
-SLEEP_TIME = 10 * 1 # seconds
-DB = MongoConnection().connect().garden_info
+SLEEP_TIME = 30 * 1 # seconds
+DB = MongoConnection().connect()[os.getenv("GARDEN_INFO_COLLECTION")]
 
 class Bot:
     mqttManager: MQTTManager
@@ -65,4 +69,5 @@ class Bot:
             
     def stop(self):
         self.stopEvent.set()
+        self.mqttManager.disconnectAll()
         self.mainThread.join()

@@ -9,6 +9,10 @@ from pydantic import BaseModel
 from GardenInfo import GardenInfo
 from MongoConnection import MongoConnection
 import time
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = FastAPI()
 mqttManager = MQTTManager()
@@ -49,7 +53,7 @@ class SignupModel(BaseModel):
 
 @app.post("/signup")
 def signup(body: SignupModel):
-    user = str(DB_CONNECTION.users.insert_one({
+    user = str(DB_CONNECTION[os.getenv("USERS_COLLECTION")].insert_one({
         "firstName": body.firstName,
         "lastName": body.lastName,
         "email": body.email,
@@ -74,7 +78,7 @@ def signup(body: SignupModel):
         body.latitude,
         user
     )
-    DB_CONNECTION.garden_info.insert_one(garden.__dict__())
+    DB_CONNECTION[os.getenv("GARDEN_INFO_COLLECTION")].insert_one(garden.__dict__())
     return JSONResponse({"status": "success", "message": "MQTT Connection added successfully"})
 
 @app.post("/")
