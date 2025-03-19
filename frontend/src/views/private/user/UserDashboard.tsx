@@ -1,26 +1,36 @@
 import ShadowBox from "@/src/components/custom/ShadowBox";
 import { Box, Button, Fab, FabLabel, Heading, HStack, Text, VStack } from "@/src/components/ui";
-import { getAPI } from "@/src/lib/API";
+import { getAPI } from "@/src/lib/api";
 import { interopIcons } from "@/src/utils/nativewind";
 import { CloudSun, Droplet, Leaf, Moon, PenLine, Plus, Sun, Thermometer } from "lucide-react-native";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 
 interopIcons([CloudSun, Sun, Moon, Thermometer, Droplet, Leaf, Plus, PenLine]);
 
 export default function UserDashboard() {
+    const [apiData, setAPIData] = useState<FarmData>({
+        humidity: 1,
+        moisture: 1,
+        temperature: 1,
+    });
+
 
     useEffect(() => {
-        getAPI();
+        const fetch = async () => {
+            const response = await getAPI();
+            if (response) setAPIData(response);
+        }
+        fetch()
     }, []) 
 
     const data = {
         farmName: "Smart drip farm",
-        temperature: 28,
+        temperature: apiData.temperature,
         light: 123,
         thermometer: 32,
-        humidity: 56,
-        soilMoisture: 30,
+        humidity: apiData.humidity,
+        soilMoisture: apiData.moisture,
         sunrise: "06:30 AM",
         sunset: "07:30 PM",
         plants: Array.from({ length: 10}, (_, index) => {
