@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from MQTTManager import MQTTManager
 from Bot import Bot
 from NotificationManager import NotificationManager
+from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 from Notification import Notification
 from pydantic import BaseModel
@@ -15,6 +16,19 @@ import os
 load_dotenv()
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:8081",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 mqttManager = MQTTManager()
 notificationManager = NotificationManager()
 bot = Bot(mqttManager, notificationManager)
@@ -110,6 +124,7 @@ async def notifications(websocket: WebSocket, userId: str):
             await notificationManager.disconnect(userId, websocket)
             break
         
+
 @app.get("/data/{userId}")
 async def data(userId: str):
     return mqttManager.getDeviceData(userId)    
