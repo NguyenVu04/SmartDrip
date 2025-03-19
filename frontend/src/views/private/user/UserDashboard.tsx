@@ -1,13 +1,18 @@
 import ShadowBox from "@/src/components/custom/ShadowBox";
 import { Box, Button, Fab, FabLabel, Heading, HStack, Text, VStack } from "@/src/components/ui";
+import { getAPI } from "@/src/lib/API";
 import { interopIcons } from "@/src/utils/nativewind";
 import { CloudSun, Droplet, Leaf, Moon, PenLine, Plus, Sun, Thermometer } from "lucide-react-native";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { ScrollView } from "react-native";
 
 interopIcons([CloudSun, Sun, Moon, Thermometer, Droplet, Leaf, Plus, PenLine]);
 
 export default function UserDashboard() {
+
+    useEffect(() => {
+        getAPI();
+    }, []) 
 
     const data = {
         farmName: "Smart drip farm",

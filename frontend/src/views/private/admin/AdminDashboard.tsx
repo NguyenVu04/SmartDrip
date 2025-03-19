@@ -1,7 +1,7 @@
 import ShadowBox from "@/src/components/custom/ShadowBox";
-import { Avatar, AvatarFallbackText, Box, Button, ButtonText, Heading, HStack, VStack } from "@/src/components/ui";
+import { Avatar, AvatarFallbackText, Box, Button, ButtonText, Heading, HStack, Input, InputField, VStack } from "@/src/components/ui";
 import { interopIcons } from "@/src/utils/nativewind";
-import { Mail, Phone, User } from "lucide-react-native";
+import { Mail, PenLine, Phone, User } from "lucide-react-native";
 import { ScrollView, Text } from "react-native";
 
 interopIcons([User, Mail, Phone])
@@ -26,7 +26,7 @@ export default function AdminDashboard() {
                     <VStack className="gap-4">
                         {accountList.map(account => {
                             return (
-                                <ShadowBox key={account.id} className="p-4">
+                                <ShadowBox key={account.id} className="flex-col gap-2 p-4">
                                 <HStack className="gap-4 items-center">
                                     <Avatar>
                                         <AvatarFallbackText>{account.fullName}</AvatarFallbackText>
@@ -50,13 +50,16 @@ export default function AdminDashboard() {
                                         <ButtonText>Detail</ButtonText>
                                     </Button>
                                 </HStack>
+                                <Input>
+                                    <InputField placeholder="Adafruit key"></InputField>
+                                    <PenLine size={16} className="text-primary-500 mr-3" />
+                                </Input>
                                 </ShadowBox>
                             )
                         })}
                     </VStack>
                 </Box>
             </VStack>
-               
         </ScrollView>
     )
 }
