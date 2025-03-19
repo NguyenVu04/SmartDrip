@@ -109,6 +109,10 @@ async def notifications(websocket: WebSocket, userId: str):
         except Exception:
             await notificationManager.disconnect(userId, websocket)
             break
+        
+@app.get("/data/{userId}")
+async def data(userId: str):
+    return mqttManager.getDeviceData(userId)    
 
 if __name__ == "__main__":
     import uvicorn

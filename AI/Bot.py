@@ -12,7 +12,7 @@ import os
 load_dotenv()
 
 #! TODO: change to 60 * 5
-SLEEP_TIME = 30 * 1 # seconds
+SLEEP_TIME = 15 * 1 # seconds
 DB = MongoConnection().connect()[os.getenv("GARDEN_INFO_COLLECTION")]
 
 class Bot:
