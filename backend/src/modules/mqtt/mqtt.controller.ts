@@ -39,7 +39,7 @@ export class MqttController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<any> {
     return await this.mqttService.removeByUserId(id);
   }
 }
