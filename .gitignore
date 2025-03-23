@@ -7,3 +7,4 @@
 backend/.env
 # remove backend/dist from gitignore
 backend/dist
+backend/dist/*
