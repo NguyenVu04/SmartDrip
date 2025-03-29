@@ -5,6 +5,7 @@ import torch.optim as optim
 import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
+# from Model import Net
 from ai_model.Model import Net
 
 IN_FEATURES = 5
@@ -48,6 +49,9 @@ def train(dataset_path: str):
     torch.save(model.state_dict(), 'ai_model/model.pth')
     joblib.dump(label_encoder, 'ai_model/label_encoder.pkl')
     joblib.dump(scaler, 'ai_model/scaler.pkl')
+    # torch.save(model.state_dict(), 'model.pth')
+    # joblib.dump(label_encoder, 'label_encoder.pkl')
+    # joblib.dump(scaler, 'scaler.pkl')
 
     model.eval()
     with torch.no_grad():
@@ -64,8 +68,12 @@ def predict(input_data): #! SoilMoisture use percentage
     label_encoder = joblib.load('ai_model/label_encoder.pkl')
     scaler = joblib.load('ai_model/scaler.pkl')
     
+    # label_encoder = joblib.load('label_encoder.pkl')
+    # scaler = joblib.load('scaler.pkl')
+    
     model = Net(IN_FEATURES)
     model.load_state_dict(torch.load("ai_model/model.pth"))
+    # model.load_state_dict(torch.load("model.pth"))
     model.eval()
     
     input_df = pd.DataFrame([input_data])
@@ -80,14 +88,16 @@ def predict(input_data): #! SoilMoisture use percentage
         irrigation_needed = bool(prediction)
         return irrigation_needed
 
-# Example input data
-# input_data = {
-#     'CropType': 'Wheat',
-#     'CropDays': 106,
-#     'SoilMoisture': 39.9,
-#     'Temperature': 35,
-#     'Humidity': 35
-# }
 
-# irrigation_needed = predict(input_data)
-# print(f'Irrigation needed: {irrigation_needed}')
+train('dataset.csv')
+
+input_data = {
+    'CropType': 'Wheat',
+    'CropDays': 106,
+    'SoilMoisture': 39.9,
+    'Temperature': 35,
+    'Humidity': 35
+}
+
+irrigation_needed = predict(input_data)
+print(f'Irrigation needed: {irrigation_needed}')
