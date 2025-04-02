@@ -32,7 +32,7 @@ export class MoistureRecordsController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<any> {
     return this.moistureRecordsService.remove(+id);
   }
 }

@@ -83,7 +83,7 @@ export class MoistureRecordsService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<any> {
     return await this.moistureRecordModel.deleteOne({ _id: id })
   }
 }

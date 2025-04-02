@@ -41,7 +41,7 @@ export class NotificationsController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.notificationsService.remove(id);
+  async remove(@Param('id') id: string): Promise<any> {
+    return this.notificationsService.remove(id);  
   }
 }

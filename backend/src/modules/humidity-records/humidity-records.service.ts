@@ -91,7 +91,7 @@ export class HumidityRecordsService {
   }
 
 
-  async remove(_id: string) {
+  async remove(_id: string): Promise<any> {
     return await this.humidityRecordModel
     .deleteOne({ _id })
 
