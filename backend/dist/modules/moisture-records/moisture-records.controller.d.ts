@@ -28,5 +28,5 @@ export declare class MoistureRecordsController {
         _id: import("mongoose").Types.ObjectId;
         userId: string;
     }>;
-    remove(id: string): Promise<import("mongodb").DeleteResult>;
+    remove(id: string): Promise<any>;
 }

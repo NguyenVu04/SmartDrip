@@ -30,5 +30,5 @@ export declare class HumidityRecordsService {
     update(updateHumidityRecordDto: UpdateHumidityRecordDto): Promise<{
         _id: any;
     }>;
-    remove(_id: string): Promise<import("mongodb").DeleteResult>;
+    remove(_id: string): Promise<any>;
 }

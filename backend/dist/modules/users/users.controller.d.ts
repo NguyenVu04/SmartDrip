@@ -16,5 +16,5 @@ export declare class UsersController {
     }>;
     findOneById(id: string): Promise<null>;
     update(updateUserDto: UpdateUserDto): Promise<void>;
-    remove(id: string): Promise<import("mongodb").DeleteResult>;
+    remove(id: string): Promise<any>;
 }

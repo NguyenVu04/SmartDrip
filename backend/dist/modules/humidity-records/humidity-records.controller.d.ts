@@ -27,5 +27,5 @@ export declare class HumidityRecordsController {
     update(updateHumidityRecordDto: UpdateHumidityRecordDto): Promise<{
         _id: any;
     }>;
-    remove(_id: string): Promise<import("mongodb").DeleteResult>;
+    remove(_id: string): Promise<any>;
 }

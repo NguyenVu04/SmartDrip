@@ -31,5 +31,5 @@ export declare class MoistureRecordsService {
         _id: import("mongoose").Types.ObjectId;
         userId: string;
     }>;
-    remove(id: number): Promise<import("mongodb").DeleteResult>;
+    remove(id: number): Promise<any>;
 }
