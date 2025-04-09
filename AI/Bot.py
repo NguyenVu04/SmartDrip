@@ -3,7 +3,7 @@ import threading
 from DeviceData import DeviceData
 from GardenInfo import GardenInfo
 from MongoConnection import MongoConnection
-from ai_model import utils
+from ai_model import predict
 import time
 from NotificationManager import NotificationManager
 from dotenv import load_dotenv
@@ -43,7 +43,6 @@ class Bot:
             return False
         
         cropDays = (current - gardenInfo.getCropStart()) / 86400
-        # cropDays = 106
         
         input = {
             'CropType': gardenInfo.getTreeType(),
@@ -52,7 +51,7 @@ class Bot:
             'Temperature': deviceData.temperature,
             'Humidity': deviceData.humidity
         }
-        return utils.predict(input)
+        return predict.predict(input)
         
     def loop_thread(self):
         while not self.stopEvent.wait(timeout=SLEEP_TIME):
