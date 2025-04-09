@@ -71,32 +71,39 @@ class MQTTConnection:
         
     def setAIOUsername(self, aioUsername: str):
         self.aioUsername = aioUsername
-    #!TODO: change feed ids to match the ones in Adafruit IO
+    
     def connected(self, client: MQTTClient):
-        client.subscribe('button2')
-        client.subscribe('temperature')
-        client.subscribe('soil_moisture')
-        client.subscribe('humidity')
+        client.subscribe(self.pump.getFeedId())
+        client.subscribe(self.temperatureSensor.getFeedId())
+        client.subscribe(self.moistureSensor.getFeedId())
+        client.subscribe(self.humiditySensor.getFeedId())
         print('Connected to Adafruit IO! Listening for feed changes...')
         
     def message(self, client: MQTTClient, feed_id: str, payload):
         print('Feed {0} received new value: {1}'.format(feed_id, payload))
-        match feed_id:
-            case 'temperature':
-                self.temperatureSensor.setTemperature(payload)
-                DB_CONNECTION[os.getenv("TEMPERATURE_RECORDS_COLLECTION")].insert_one(self.temperatureSensor.createRecord(self.userId).__dict__())
-            case 'soil_moisture':
-                self.moistureSensor.setMoisture(payload)
-                DB_CONNECTION[os.getenv("MOISTURE_RECORDS_COLLECTION")].insert_one(self.moistureSensor.createRecord(self.userId).__dict__())
-            case 'humidity':
-                self.humiditySensor.setHumidity(payload)
-                DB_CONNECTION[os.getenv("HUMIDITY_RECORDS_COLLECTION")].insert_one(self.humiditySensor.createRecord(self.userId).__dict__())
-            case 'button2':
-                if payload == '1':
-                    self.pump.turnOn()
-                elif payload == '0':
-                    self.pump.turnOff()
-                DB_CONNECTION[os.getenv("PUMP_RECORDS_COLLECTION")].insert_one(self.pump.createRecord(self.userId).__dict__())
+        if feed_id == self.temperatureSensor.getFeedId():
+            self.temperatureSensor.setTemperature(payload)
+            DB_CONNECTION[os.getenv("TEMPERATURE_RECORDS_COLLECTION")].insert_one(
+                self.temperatureSensor.createRecord(self.userId).__dict__()
+            )
+        elif feed_id == self.moistureSensor.getFeedId():
+            self.moistureSensor.setMoisture(payload)
+            DB_CONNECTION[os.getenv("MOISTURE_RECORDS_COLLECTION")].insert_one(
+                self.moistureSensor.createRecord(self.userId).__dict__()
+            )
+        elif feed_id == self.humiditySensor.getFeedId():
+            self.humiditySensor.setHumidity(payload)
+            DB_CONNECTION[os.getenv("HUMIDITY_RECORDS_COLLECTION")].insert_one(
+                self.humiditySensor.createRecord(self.userId).__dict__()
+            )
+        elif feed_id == self.pump.getFeedId():
+            if payload == '1':
+                self.pump.turnOn()
+            elif payload == '0':
+                self.pump.turnOff()
+            DB_CONNECTION[os.getenv("PUMP_RECORDS_COLLECTION")].insert_one(
+                self.pump.createRecord(self.userId).__dict__()
+            )
             
     def subscribe(self, client, userdata, mid, granted_qos):
         print('Subscribed successfully!')
@@ -116,8 +123,8 @@ class MQTTConnection:
         )
         
     def activatePump(self):
-        self.aioClient.publish('button2', '1')
+        self.aioClient.publish(self.pump.getFeedId(), '1')
         
     def deactivatePump(self):
-        self.aioClient.publish('button2', '0')
+        self.aioClient.publish(self.pump.getFeedId(), '0')
         
