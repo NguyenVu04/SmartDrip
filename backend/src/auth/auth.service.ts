@@ -4,6 +4,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { comparePasswordHelper } from 'src/helpers/util/util';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/modules/users/users.service';
+import { UserDocument } from 'src/modules/users/schemas/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -54,5 +55,25 @@ export class AuthService {
   async register(resgisterDto: CreateAuthDto){
     
     return await this.userService.handleRegister(resgisterDto)
+  }
+
+  async verify(_id: string, codeId: string){
+    // find user by _id
+    const user : any = await this.userService.findOneById(_id) as UserDocument | null;
+    if (!user) {
+      throw new UnauthorizedException('Invalid user');
+    }
+
+    console.log(user.codeId)
+    if (user.isActive === true){
+      throw new UnauthorizedException('This account is already activated!')
+    }
+    // check if codeId is valid
+    if (user?.codeId !== codeId) {
+      throw new UnauthorizedException('Invalid codeId');
+    }
+
+    // trigger isActive to true
+    return this.userService.activateUser(_id)
   }
 }

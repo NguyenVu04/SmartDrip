@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { CreateAuthDto, VerifyAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Public, ResponseMessage } from 'src/decorator/customize';
@@ -54,5 +54,20 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
+  }
+
+  @Public()
+  @Post('verify')
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Verifies the user by checking the provided user ID and code ID.
+ * 
+ * @param verifyDto - Data transfer object containing the user ID and code ID.
+ * @returns A promise that resolves to the verification result.
+ */
+
+/*******  61e6544d-eb2e-48cf-aa9a-ecf048f6f445  *******/
+  async verify(@Body() verifyDto: VerifyAuthDto) {
+    return await this.authService.verify(verifyDto._id, verifyDto.codeId);
   }
 }

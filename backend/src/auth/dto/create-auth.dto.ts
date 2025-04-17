@@ -21,3 +21,12 @@ export class CreateAuthDto {
     @IsOptional()
     address: string;
 }
+
+
+export class VerifyAuthDto {
+    @IsNotEmpty({message: 'User id is required'})
+    _id: string;
+
+    @IsNotEmpty({message: 'Code is required'})
+    codeId: string;
+}

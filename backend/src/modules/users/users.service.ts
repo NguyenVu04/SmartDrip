@@ -130,4 +130,19 @@ export class UsersService {
       _id: user._id,
     }
   }
+
+  async activateUser(_id : string){
+    // find user by id
+    const user : any = await this.userModel.findById(_id).exec();
+    
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Toggle the isActive status
+    user.isActive = !user.isActive;
+    
+    // Save the updated user
+    return user.save();
+  }
 }
