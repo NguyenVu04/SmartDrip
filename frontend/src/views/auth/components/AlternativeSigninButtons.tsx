@@ -17,13 +17,19 @@ const icons = [
 ];
 
 export default function AlternativeSigninButtons () {
-    const { pushError } = useUtility();
+    const { pushWarning } = useUtility();
+
+    const unimplemented = () => {
+        pushWarning({
+            title: "Unimplemented feature",
+        })
+    }
 
 
     return (
         <HStack space="4xl" className="justify-center">
         {icons.map((icon) => (
-            <Pressable onPress={() => pushError({title: "Developing feature!"})} key={icon.id} className="flex items-center justify-center border border-gray-400 rounded-lg p-3 size-16">
+            <Pressable onPress={unimplemented} key={icon.id} className="flex items-center justify-center border border-gray-400 rounded-lg p-3 size-16">
             <Image source={icon.source} alt={icon.id} size="2xs" />
             </Pressable>
         ))}

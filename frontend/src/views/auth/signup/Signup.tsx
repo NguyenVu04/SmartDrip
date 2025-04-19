@@ -6,17 +6,45 @@ import { Eye, EyeClosed, Lock, LockKeyhole, Mail } from "lucide-react-native";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { useUtility } from "@/src/context/utiliity";
+import { AuthService } from "@/src/lib/api";
 
 export default function UserSignup() {
     const router = useRouter();
     const { pushSuccess, pushError } = useUtility();
 
+    const [signupPayload, setSignupPayload] = useState<{email: string, password: string, confirmPassword: string}>({
+        email: "",
+        password: "",
+        confirmPassword: ""
+    })
+
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
     const [isShowConfirmPassword, setIsShowConfirmPassword] = useState<boolean>(false);
 
-    const submit = () => {
+    const submit = async () => {
+        if (!signupPayload.email || !signupPayload.password || !signupPayload.confirmPassword) {
+            pushError({ title: "Please fill in all fields!" });
+            return;
+        }
+        if (signupPayload.password !== signupPayload.confirmPassword) {
+            pushError({ title: "Passwords do not match!" });
+            return;
+        }
+
+        const auth = new AuthService();
+
+        const res = await auth.signup({email: signupPayload.email, password: signupPayload.password});
+        if (!res.success) {
+            pushError({ title: "Error", message: res.message });
+            return;
+        }
+
         pushSuccess({title: "Please verify your email"});
         router.push("/sign-up/verify-otp");
+    }
+
+    const onChangePayload = (key: string, value: string) => {
+        setSignupPayload((prev) => ({ ...prev, [key]: value }));
     }
 
     return (
@@ -32,7 +60,7 @@ export default function UserSignup() {
                             <InputSlot>
                                 <Icon as={Mail} size="lg" className="text-primary-500" />
                             </InputSlot>
-                            <InputField placeholder="Email" />
+                            <InputField placeholder="Email" value={signupPayload.email} onChangeText={(text) => onChangePayload("email", text)} />
                         </Input>
                     </FormControl>
 
@@ -41,7 +69,7 @@ export default function UserSignup() {
                             <InputSlot>
                                 <Icon as={Lock} size="lg" className="text-primary-500" />
                             </InputSlot>
-                            <InputField type={isShowPassword ? "text" : "password"} placeholder="Password" />
+                            <InputField type={isShowPassword ? "text" : "password"} placeholder="Password" value={signupPayload.password} onChangeText={(text) => onChangePayload("password", text)} />
                             <InputSlot onTouchStart={() => setIsShowPassword(!isShowPassword)} >
                                 {!isShowPassword ? <Icon as={Eye} size="lg" className="text-primary-500" /> : <Icon as={EyeClosed} size="lg" className="text-primary-500" />}
                             </InputSlot>
@@ -53,14 +81,16 @@ export default function UserSignup() {
                             <InputSlot>
                                 <Icon as={LockKeyhole} size="lg" className="text-primary-500" />
                             </InputSlot>
-                            <InputField type={isShowConfirmPassword ? "text" : "password"} placeholder="Confirm Password" />
+                            <InputField type={isShowConfirmPassword ? "text" : "password"} placeholder="Confirm Password" value={signupPayload.confirmPassword} onChangeText={(text) => onChangePayload("confirmPassword", text)} />
                             <InputSlot onTouchStart={() => setIsShowConfirmPassword(!isShowConfirmPassword)} >
                                 {!isShowConfirmPassword ? <Icon as={Eye} size="lg" className="text-primary-500" /> : <Icon as={EyeClosed} size="lg" className="text-primary-500" />}
                             </InputSlot>
                         </Input>
                     </FormControl>
 
-                    <Text></Text>
+                    <HStack className="flex justify-end">
+                        <Link href="/sign-up/verify-otp-email" className="underline text-primary-500">Verify OTP?</Link>
+                    </HStack>
 
                     <Button size="xl" onPress={submit} className="w-full rounded-lg bg-primary-500">
                         <ButtonText>Sign up</ButtonText>

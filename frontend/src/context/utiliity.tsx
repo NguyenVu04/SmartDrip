@@ -7,6 +7,7 @@ import Alert from "../components/custom/Alert";
 type UtilityContextType = {
     pushSuccess: (notification: NotificationType) => void
     pushError: (notification: NotificationType) => void
+    pushWarning: (notification: NotificationType) => void
     pushAlertDialog: (alert: AlertType) => void
 }
 
@@ -48,6 +49,11 @@ export default function UtilityProvider({ children }: Props) {
         pushToast("error", notification);
     }
 
+    const pushWarning = (notification: NotificationType) => {
+        if (!notification.startIcon) notification.startIcon = <Info color="white" size={24} />
+        pushToast("warning", notification);
+    }
+
     const pushToast = (type: ToastType, notification: NotificationType) => {
         const cloneToastIdList = [...toastIdList];
         if (cloneToastIdList.length >= maxNumberOfToasts) {
@@ -62,7 +68,7 @@ export default function UtilityProvider({ children }: Props) {
         setToastIdList(cloneToastIdList);
 
         if (notification.status === 401) {
-            // Handle unauthorized error
+            pushError({title: "Unauthorized", message: "Please login again"})
         }
 
         toast.show({
@@ -98,6 +104,7 @@ export default function UtilityProvider({ children }: Props) {
     const value = {
         pushSuccess,
         pushError,
+        pushWarning,
         pushAlertDialog
     };
 
