@@ -24,6 +24,8 @@ export { Image } from "./image";
 
 export { Input, InputField, InputSlot } from "./input";
 
+export { Modal, ModalBackdrop, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "./modal"
+
 export { Pressable } from "./pressable";
 
 export { Text } from "./text";

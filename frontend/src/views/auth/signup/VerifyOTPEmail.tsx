@@ -1,25 +1,26 @@
 import { ScrollView } from "react-native";
 import { Button, ButtonText, Center, Divider, FormControl, Heading, HStack, Icon, Input, InputField, InputSlot, Text, VStack } from "@/src/components/ui";
 import { BigLogo } from "@/src/components/custom";
-import {  RectangleEllipsis } from "lucide-react-native";
+import {  Mail, RectangleEllipsis } from "lucide-react-native";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { useUtility } from "@/src/context/utiliity";
 import { AuthService } from "@/src/lib/api";
 
-export default function SignupVerifyOTP() {
+export default function SignupVerifyOTPEmail() {
     const router = useRouter()
     const { pushSuccess, pushError } = useUtility();
-
+    
     const [otp, setOtp] = useState<string>("");
-
+    const [email, setEmail] = useState<string>("");
+    
     const submit = async () => {
         if (!otp) {
             pushError({ title: "Please fill in all fields!" });
             return;
         }
         const auth = new AuthService();
-        const res = await auth.verifyOTP(otp);
+        const res = await auth.verifyOTPEmail(email, otp);
         if (!res.success) {
             pushError({ title: "Error", message: res.message });
             return;
@@ -39,9 +40,18 @@ export default function SignupVerifyOTP() {
                     <FormControl>
                         <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
                             <InputSlot>
+                                <Icon as={Mail} size="lg" className="text-primary-500" />
+                            </InputSlot>
+                            <InputField placeholder="Email" onChangeText={(text) => setEmail(text)} />
+                        </Input>
+                    </FormControl>
+
+                    <FormControl>
+                        <Input variant="outline" size="lg" className="w-full rounded-lg px-3" >
+                            <InputSlot>
                                 <Icon as={RectangleEllipsis} size="lg" className="text-primary-500" />
                             </InputSlot>
-                            <InputField keyboardType="number-pad" placeholder="OTP" onChangeText={(text) => setOtp(text)} />
+                            <InputField keyboardType="number-pad" placeholder="OTP" onChangeText={(text) => setOtp(text)}  />
                         </Input>
                     </FormControl>
 

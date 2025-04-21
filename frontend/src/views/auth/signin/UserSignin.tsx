@@ -6,16 +6,39 @@ import { BigLogo } from "@/src/components/custom";
 import { Eye, EyeClosed, Lock, Mail } from "lucide-react-native";
 import { useState } from "react";
 import { useUtility } from "@/src/context/utiliity";
+import { AuthService } from "@/src/lib/api";
 
 export default function UserSignin() {
     const router = useRouter();
-    const { pushSuccess, pushError } = useUtility();
+    const { pushSuccess, pushError, pushWarning } = useUtility();
+
+    const unimplemented = () => {
+        pushWarning({
+            title: "Unimplemented feature",
+        })
+    }
 
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
+    const [signinPayload, setSigninPayload] = useState<LoginPayload>({ username: "", password: "" });
 
-    const submit = () => {
+    const submit = async () => {
+        if (!signinPayload.username || !signinPayload.password) {
+            pushError({ title: "Please fill in all fields!" });
+            return;
+        }
+
+        const auth = new AuthService();
+        const res = await auth.login(signinPayload);
+        if (!res.success) {
+            pushError({ title: "Error", message: res.message });
+            return;
+        }
         pushSuccess({ title: "Sign in successful!" });
         router.push("/user/dashboard");
+    }
+
+    const onChangePayload = (key: string, value: string) => {
+        setSigninPayload((prev) => ({ ...prev, [key]: value }));
     }
 
     return (
@@ -31,7 +54,7 @@ export default function UserSignin() {
                             <InputSlot>
                                 <Icon as={Mail} size="lg" className="text-primary-500" />
                             </InputSlot>
-                            <InputField placeholder="Email" />
+                            <InputField placeholder="Username or Email" value={signinPayload.username} onChangeText={(text) => onChangePayload("username", text)} />
                         </Input>
                     </FormControl>
 
@@ -40,7 +63,7 @@ export default function UserSignin() {
                             <InputSlot>
                                 <Icon as={Lock} size="lg" className="text-primary-500" />
                             </InputSlot>
-                            <InputField type={isShowPassword ? "text" : "password"} placeholder="Password" />
+                            <InputField type={isShowPassword ? "text" : "password"} placeholder="Password" value={signinPayload.password} onChangeText={(text) => onChangePayload("password", text)} />
                             <InputSlot onTouchStart={() => setIsShowPassword(!isShowPassword)} >
                                 {!isShowPassword ? <Icon as={Eye} size="lg" className="text-primary-500" /> : <Icon as={EyeClosed} size="lg" className="text-primary-500" />}
                             </InputSlot>

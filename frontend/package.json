@@ -25,6 +25,7 @@
     "@gluestack-ui/icon": "^0.1.26",
     "@gluestack-ui/image": "^0.1.17",
     "@gluestack-ui/input": "^0.1.38",
+    "@gluestack-ui/modal": "^0.1.41",
     "@gluestack-ui/nativewind-utils": "^1.0.26",
     "@gluestack-ui/overlay": "^0.1.22",
     "@gluestack-ui/pressable": "^0.1.23",
@@ -41,6 +42,7 @@
     "expo-haptics": "~14.0.1",
     "expo-linking": "~7.0.5",
     "expo-router": "~4.0.17",
+    "expo-secure-store": "^14.0.1",
     "expo-splash-screen": "~0.29.21",
     "expo-status-bar": "~2.0.1",
     "expo-symbols": "~0.2.2",
@@ -59,7 +61,8 @@
     "react-native-screens": "~4.4.0",
     "react-native-svg": "^15.11.2",
     "react-native-web": "~0.19.13",
-    "react-native-webview": "13.12.5"
+    "react-native-webview": "13.12.5",
+    "swr": "^2.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

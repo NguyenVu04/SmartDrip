@@ -6,7 +6,13 @@ import { ScrollView, Text } from "react-native";
 
 export default function AdminMenu() {
     const router = useRouter();
-    const { pushAlertDialog } = useUtility();
+    const { pushAlertDialog, pushWarning } = useUtility();
+
+    const unimplemented = () => {
+        pushWarning({
+            title: "Unimplemented feature",
+        })
+    }
 
     const logout = () => {
         pushAlertDialog({
@@ -31,7 +37,7 @@ export default function AdminMenu() {
                         <ButtonText className="text-xl text-slate-600">My account</ButtonText>
                     </Button>
                     
-                    <Button size="lg" variant="outline" action="default" className="rounded-xl h-14 border-2">
+                    <Button size="lg" variant="outline" action="default" onPress={unimplemented} className="rounded-xl h-14 border-2">
                         <ButtonText className="text-xl text-slate-600">Language</ButtonText>
                     </Button>
 
