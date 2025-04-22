@@ -2,10 +2,7 @@ from fastapi import WebSocket, WebSocketDisconnect
 from Notification import Notification
 from MongoConnection import MongoConnection
 import asyncio
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 DB = MongoConnection().connect()[os.getenv("NOTIFICATIONS_COLLECTION")]
 

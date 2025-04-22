@@ -4,16 +4,12 @@ from datetime import datetime
 class GardenInfo:
     treeType: str
     numOfTree: int
-    longitude: float
-    latitude: float
     userId: str
     cropStart: int
     
-    def __init__(self, treeType: str, numOfTree: int, longitude: float, latitude: float, userId: str, cropStart: int = None):
+    def __init__(self, treeType: str, numOfTree: int, userId: str, cropStart: int = None):
         self.treeType = treeType
         self.numOfTree = numOfTree
-        self.longitude = longitude
-        self.latitude = latitude
         self.userId = userId
         if cropStart is None:
             self.cropStart = int(time.time())
@@ -24,19 +20,24 @@ class GardenInfo:
         return {
             "treeType": self.treeType,
             "numOfTree": self.numOfTree,
-            "longitude": self.longitude,
-            "latitude": self.latitude,
             "userId": self.userId,
             "cropStart": self.cropStart
         }
     
     @classmethod
     def from_dict(cls, data: dict):
+        if "cropStart" not in data:
+            data["cropStart"] = int(time.time())
+        if "userId" not in data:
+            raise ValueError("userId is required")
+        if "treeType" not in data:
+            raise ValueError("treeType is required")
+        if "numOfTree" not in data:
+            data["numOfTree"] = 0
+        
         return cls(
             treeType = data["treeType"],
             numOfTree = data["numOfTree"],
-            longitude = data["longitude"],
-            latitude = data["latitude"],
             userId = data["userId"],
             cropStart = data["cropStart"]
         )

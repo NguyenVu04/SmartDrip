@@ -6,10 +6,7 @@ from MongoConnection import MongoConnection
 from ai_model import predict
 import time
 from NotificationManager import NotificationManager
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 #! TODO: change to 60 * 5
 SLEEP_TIME = 60 * 1 # seconds
@@ -56,7 +53,10 @@ class Bot:
     def loop_thread(self):
         while not self.stopEvent.wait(timeout=SLEEP_TIME):
             for userId, connection in self.mqttManager.getConnections().items():
-                gardenInfo = GardenInfo.from_dict(DB.find_one({"userId": userId}))
+                dict = DB.find_one({"userId": userId})
+                if dict is None:
+                    continue
+                gardenInfo = GardenInfo.from_dict(dict)
                 deviceData = connection.getDeviceData()
                 result = self.getResult(deviceData, gardenInfo)
                 if result:

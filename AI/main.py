@@ -61,8 +61,6 @@ class SignupModel(BaseModel):
     
     treeType: str
     numOfTree: int
-    longitude: float
-    latitude: float
     cropStart: int | None = int(time.time())
 
 @app.post("/signup")
@@ -88,8 +86,6 @@ def signup(body: SignupModel):
     garden = GardenInfo(
         body.treeType,
         body.numOfTree,
-        body.longitude,
-        body.latitude,
         user
     )
     DB_CONNECTION[os.getenv("GARDEN_INFO_COLLECTION")].insert_one(garden.__dict__())

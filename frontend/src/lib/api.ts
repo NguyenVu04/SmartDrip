@@ -288,7 +288,7 @@ export class MQTTService {
     private axios: AxiosInstance;
 
     constructor() {
-        this.baseURL = AI_URL + "/mqtt";
+        this.baseURL = AI_URL;
         this.axios = axiosInstance;
     }
 

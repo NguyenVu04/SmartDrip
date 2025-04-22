@@ -1,10 +1,7 @@
 from MQTTConnection import MQTTConnection
 from MongoConnection import MongoConnection
 from DeviceData import DeviceData
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 DB_CONNECTION = MongoConnection().connect()[os.getenv("MQTT_COLLECTION")]
 
