@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import { axiosInstance, getFromStorage, processError, processResponse, saveToStorage } from "./utils";
 
 export const API_URL = "https://smartdrip-979829148615.asia-southeast2.run.app/api/v1"
+export const AI_URL = "http://localhost:8000"
 
 export class UserService {
     private baseURL: string;
@@ -287,7 +288,7 @@ export class MQTTService {
     private axios: AxiosInstance;
 
     constructor() {
-        this.baseURL = API_URL + "/mqtt";
+        this.baseURL = AI_URL + "/mqtt";
         this.axios = axiosInstance;
     }
 

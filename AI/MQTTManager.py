@@ -48,11 +48,15 @@ class MQTTManager:
         self,
         aioKey: str,
         aioUsername: str, 
-        userId: str, pumpFeed: str, 
+        userId: str, 
+        pumpFeed: str, 
         temperatureFeed: str, 
         moistureFeed: str, 
         humidityFeed: str
     ):
+        if (DB_CONNECTION.find_one({"userId": userId})):
+            self.removeConnection(userId)
+            
         connection = MQTTConnection(
             aioKey, 
             aioUsername, 
