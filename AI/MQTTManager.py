@@ -28,10 +28,23 @@ class MQTTManager:
         self.connections[userId].pump.turnOff()
         
     def getDeviceData(self, userId: str):
+        if self.connections.get(userId, None) is None:
+            return DeviceData(
+                temperature=0,
+                moisture=0,
+                humidity=0,
+                pump=False,
+                temperatureLastRecord=None,
+                moistureLastRecord=None,
+                humidityLastRecord=None,
+                pumpLastRecord=None
+            )
+        
         return DeviceData(
             temperature=self.connections[userId].temperatureSensor.getTemperature(),
             moisture=self.connections[userId].moistureSensor.getMoisture(),
             humidity=self.connections[userId].humiditySensor.getHumidity(),
+            pump=self.connections[userId].pump.isOn,
             temperatureLastRecord=self.connections[userId].temperatureSensor.getLastRecord(),
             moistureLastRecord=self.connections[userId].moistureSensor.getLastRecord(),
             humidityLastRecord=self.connections[userId].humiditySensor.getLastRecord(),

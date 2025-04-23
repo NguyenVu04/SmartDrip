@@ -4,7 +4,11 @@ import { Image } from "react-native";
 export function BigLogo() {
     return (
         <Image
-            className="size-44 mr-4"
+            style={{
+                width: 200,
+                height: 200,
+            }}
+            className="w-8 h-8 mr-4"
             source={require("@/assets/images/logo.png")}
             alt="image"
         />
@@ -14,7 +18,11 @@ export function BigLogo() {
 export function MediumLogo() {
     return (
         <Image
-            className="size-32 mr-4"
+            style={{
+                width: 160,
+                height: 160,
+            }}
+            className="size-14 mr-4"
             source={require("@/assets/images/logo.png")}
             alt="image"
         />

@@ -113,6 +113,7 @@ class MQTTConnection:
             temperature=self.temperatureSensor.getTemperature(),
             moisture=self.moistureSensor.getMoisture(),
             humidity=self.humiditySensor.getHumidity(),
+            pump=self.pump.isOn,
             temperatureLastRecord=self.temperatureSensor.getLastRecord(),
             moistureLastRecord=self.moistureSensor.getLastRecord(),
             humidityLastRecord=self.humiditySensor.getLastRecord(),

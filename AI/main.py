@@ -125,6 +125,20 @@ async def notifications(websocket: WebSocket, userId: str):
 async def data(userId: str):
     return mqttManager.getDeviceData(userId)    
 
+@app.get("/pump/all/{userId}")
+async def pump(userId: str):
+    pumps = DB_CONNECTION[os.getenv("PUMP_RECORDS_COLLECTION")].find({"userId": userId}).sort("timestamp", -1)
+    if pumps is None:
+        return JSONResponse({"status": "success", "pumps": []})
+    
+    # Convert ObjectId to string for each document
+    pumps_list = []
+    for pump in pumps:
+        pump["_id"] = str(pump["_id"])  # Convert ObjectId to string
+        pumps_list.append(pump)
+    
+    return JSONResponse({"status": "success", "pumps": pumps_list})
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)

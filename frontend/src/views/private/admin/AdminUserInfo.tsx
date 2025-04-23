@@ -44,10 +44,6 @@ const AdminUserInfo: React.FC<AdminUserInfoProps> = ({user, userInfoList, setUse
             humidityFeed
         }).then((res) => {
             setIsSubmitting(false);
-            if (!res.success) {
-                pushError({ message: res.message, title: "Error" });
-                return;
-            }
             pushSuccess({ message: "MQTT configuration created successfully", title: "Success" });
         }).catch((err) => {
             setIsSubmitting(false);

@@ -12,6 +12,7 @@ class DeviceData:
         temperature: float, 
         humidity: float, 
         moisture: float,
+        pump: bool,
         temperatureLastRecord: int,
         humidityLastRecord: int,
         moistureLastRecord: int,
@@ -20,6 +21,7 @@ class DeviceData:
         self.temperature = temperature
         self.humidity = humidity
         self.moisture = moisture
+        self.pump = pump
         self.temperatureLastRecord = temperatureLastRecord
         self.humidityLastRecord = humidityLastRecord
         self.moistureLastRecord = moistureLastRecord

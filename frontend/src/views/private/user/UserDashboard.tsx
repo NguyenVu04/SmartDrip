@@ -9,14 +9,48 @@ import { useUtility } from "@/src/context/utiliity";
 import { GardenInfoServfice } from "@/src/lib/api";
 import PopupEditPlant from "./components/PopupEditPlant";
 import { ButtonIcon } from "@/src/components/ui/button";
+import { useAuth } from "@/src/context/auth";
+import { getFromStorage } from "@/src/lib/utils";
+import axios from "axios";
 
 interopIcons([CloudSun, Sun, Moon, Thermometer, Droplet, Leaf, Plus, PenLine]);
+
+type DataType = {
+    temperature: number,
+    humidity: number,
+    moisture: number,
+    isOn: boolean,
+}
 
 export default function UserDashboard() {
     const { pushError, pushSuccess, pushAlertDialog } = useUtility();
 
     const [counterRefresh, setCounterRefresh] = useState(0);
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+    const [bla, setDate] = useState<DataType>({
+        temperature: 0,
+        humidity: 0,
+        moisture: 0,
+        isOn: false,
+    })
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8000/data/`+ getFromStorage("userId")); // Replace with your API endpoint
+                const data = res.data;
+                setDate(data);
+            } catch (error) {
+                // console.error("Error fetching data:", error);
+            }
+        };
+
+        const interval = setInterval(() => {
+            fetchData();
+        }, 1000);
+
+        return () => clearInterval(interval); // Cleanup interval on unmount
+    }, [])
 
     const onCloseAddModal = () => {
         setIsOpenAddModal(false);
@@ -100,16 +134,16 @@ export default function UserDashboard() {
                         <VStack className="w-full h-fit gap-4">
                             <HStack className="items-end gap-2">
                                 <CloudSun size={40} className="text-primary-500" />
-                                <Heading className="text-2xl text-black font-medium">{`${data.temperature} \u00b0 `}</Heading>
+                                <Heading className="text-2xl text-black font-medium">{`${bla.temperature} \u00b0 `}</Heading>
                                 <Text className="text-xl ml-auto text-black font-medium">{data.farmName}</Text>
                             </HStack>
                             <HStack className="gap-4">
                                 <ShadowBox className="h-fit">
                                     <HStack className="flex-1 justify-start items-center p-4 gap-4">
-                                        <Sun className="text-primary-500" />
+                                    <Droplet className="text-primary-500" />
                                         <VStack>
-                                            <Text className="font-semibold text-2xs">Light</Text>
-                                            <Text>{data.light + " Lumens"}</Text>
+                                            <Text className="font-semibold text-2xs">Pump</Text>
+                                            <Text>{bla.isOn ? "On" : "Off"}</Text>
                                         </VStack>
                                     </HStack>
                                 </ShadowBox>
@@ -118,7 +152,7 @@ export default function UserDashboard() {
                                         <Thermometer className="text-primary-500" />
                                         <VStack>
                                             <Text className="font-semibold text-2xs">Thermometer</Text>
-                                            <Text>{`${data.thermometer} \u00b0`}</Text>
+                                            <Text>{`${bla.temperature} \u00b0`}</Text>
                                         </VStack>
                                     </HStack>
                                 </ShadowBox>
@@ -129,7 +163,7 @@ export default function UserDashboard() {
                                         <Droplet className="text-primary-500" />
                                         <VStack>
                                             <Text className="font-semibold text-2xs">Humidity</Text>
-                                            <Text>{`${data.humidity} \%`}</Text>
+                                            <Text>{`${bla.humidity} \%`}</Text>
                                         </VStack>
                                     </HStack>
                                 </ShadowBox>
@@ -138,26 +172,26 @@ export default function UserDashboard() {
                                         <Leaf className="text-primary-500" />
                                         <VStack>
                                             <Text className="font-semibold text-2xs">Soil moisture</Text>
-                                            <Text>{`${data.soilMoisture} \%`}</Text>
+                                            <Text>{`${bla.moisture} \%`}</Text>
                                         </VStack>
                                     </HStack>
                                 </ShadowBox>
                             </HStack>
-                            <ShadowBox className="h-fit">
-                                <HStack className="flex-1 items-center p-4 gap-2">
-                                    <Sun className="text-primary-500" />
-                                    <VStack>
-                                        <Text className="font-semibold text-2xs">Sunrise</Text>
-                                        <Text>{data.sunrise}</Text>
-                                    </VStack>
+                                {/* <ShadowBox className="h-fit">
+                                    <HStack className="flex-1 items-center p-4 gap-2">
+                                        <Sun className="text-primary-500" />
+                                        <VStack>
+                                            <Text className="font-semibold text-2xs">Sunrise</Text>
+                                            <Text>{data.sunrise}</Text>
+                                        </VStack>
 
-                                    <VStack className="items-end ml-auto">
-                                        <Text className="font-semibold text-2xs">Sunset</Text>
-                                        <Text>{data.sunset}</Text>
-                                    </VStack>
-                                    <Moon className="text-primary-500" />
-                                </HStack>
-                            </ShadowBox>
+                                        <VStack className="items-end ml-auto">
+                                            <Text className="font-semibold text-2xs">Sunset</Text>
+                                            <Text>{data.sunset}</Text>
+                                        </VStack>
+                                        <Moon className="text-primary-500" />
+                                    </HStack>
+                                </ShadowBox> */}
                         </VStack>
                     </Box>
 
