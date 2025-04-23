@@ -26,12 +26,14 @@ class GardenInfo:
     
     @classmethod
     def from_dict(cls, data: dict):
+        if data is None:
+            return None
         if "cropStart" not in data:
             data["cropStart"] = int(time.time())
         if "userId" not in data:
-            raise ValueError("userId is required")
+            return None
         if "treeType" not in data:
-            raise ValueError("treeType is required")
+            return None
         if "numOfTree" not in data:
             data["numOfTree"] = 0
         

@@ -85,6 +85,7 @@ declare global {
         longitude?: number;
         latitude?: number;
         userId: string;
+        cropStart: string;
     }
 
     type CreateGardenInfoPayload = {

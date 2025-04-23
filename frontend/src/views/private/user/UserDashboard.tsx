@@ -1,7 +1,7 @@
 import ShadowBox from "@/src/components/custom/ShadowBox";
 import { Box, Button, Fab, FabLabel, Heading, HStack, Text, VStack } from "@/src/components/ui";
 import { interopIcons } from "@/src/utils/nativewind";
-import { CloudSun, Droplet, Leaf, Moon, PenLine, Plus, Sun, Thermometer, Trash } from "lucide-react-native";
+import { CalendarDays, CloudSun, Droplet, Leaf, Moon, PenLine, Plus, Sun, Thermometer, Trash } from "lucide-react-native";
 import { Fragment, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import PopupAddPlant from "./components/PopupAddPlant";
@@ -173,10 +173,10 @@ export default function UserDashboard() {
                                         <VStack>
                                             <Text className="font-semibold text-2xs">{plant.treeType}</Text>
                                             <Text>{`${plant.numOfTree} plants`}</Text>
+                                            <Text>{`${ new Date(new Date(plant.cropStart).getTime() * 1000).toDateString() }`}</Text>
                                         </VStack>
-
                                         <Button size="xs" action="negative" onPress={() => deletePlant(plant._id)} className="ml-auto rounded-md px-2">
-                                            <ButtonIcon as={Trash} size="sm" />
+                                            <ButtonIcon as={Trash} size="sm"     />
                                         </Button>
                                         <Button size="xs" onPress={() => setCurrentTreeInfo(plant)} className="rounded-md px-2">
                                             <ButtonIcon as={PenLine} size="sm" />
