@@ -4,6 +4,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+from sklearn.tree import plot_tree
 from joblib import dump
 import json
 
@@ -46,3 +48,18 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
 print(f"Model Accuracy: {accuracy:.2f}")
+
+# Extract a single tree from the Random Forest
+single_tree = model.estimators_[0]  # Get the first tree in the forest
+
+# Plot the tree
+plt.figure(figsize=(20, 10))  # Set the figure size
+plot_tree(
+    single_tree,
+    feature_names=X.columns,
+    class_names=["No Irrigation", "Irrigation"],  # Replace with your class labels
+    filled=True,
+    rounded=True,
+    fontsize=10
+)
+plt.show()
